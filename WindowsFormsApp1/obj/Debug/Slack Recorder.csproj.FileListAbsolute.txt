@@ -80,3 +80,41 @@ D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csp
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\WindowsFormsApp1.exe
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\WindowsFormsApp1.pdb
 D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csprojAssemblyReference.cache
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csprojAssemblyReference.cache
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.GenerateResource.cache
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.CoreCompileInputs.cache
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Win32.Primitives.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\NAudio.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.AppContext.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Console.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Globalization.Calendars.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.Compression.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.Compression.ZipFile.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.FileSystem.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.FileSystem.Primitives.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Net.Http.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Net.Sockets.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Algorithms.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Encoding.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Primitives.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Xml.ReaderWriter.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Tulpep.NotificationWindow.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.xml
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\NAudio.xml
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.pdb
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.xml
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.CopyComplete

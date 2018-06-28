@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Management;
 using System.Diagnostics;
-using NAudio
+using NAudio;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -28,13 +28,13 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace WHERE ProcessName = \"Slack.exe\""));
+            /*startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace WHERE ProcessName = \"Slack.exe\""));
             startWatch.EventArrived += new EventArrivedEventHandler(startWatch_EventArrived);
             startWatch.Start();
 
             stopWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace WHERE ProcessName = \"Slack.exe\""));
             stopWatch.EventArrived += new EventArrivedEventHandler(stopWatch_EventArrived);
-            stopWatch.Start();
+            stopWatch.Start();*/
         }
 
         
@@ -74,7 +74,7 @@ namespace WindowsFormsApp1
 
                     //Start record
 
-                    /*int deviceNumber = sourceList.SelectedItems[0].Index;
+                   /* int deviceNumber = sourceList.SelectedItems[0].Index;
 
                     sourceStream = new NAudio.Wave.WaveIn();
                     sourceStream.DeviceNumber = deviceNumber;
@@ -93,9 +93,9 @@ namespace WindowsFormsApp1
 
                     notifyIcon.Visible = true;
                     notifyIcon.ShowBalloonTip(1000, "Slack Recorder", "Record started", ToolTipIcon.Info);
-                    notifyIcon.Visible = false;*/
+                    notifyIcon.Visible = false;
 
-                    counter = 0;
+                    counter = 0;*/
                 }
                 counter++;
             }
@@ -105,15 +105,15 @@ namespace WindowsFormsApp1
         {
            if (recordButton.Text == "Start recording")
            {
-                startWatch.Start();
-                stopWatch.Start();
+                /*startWatch.Start();
+                stopWatch.Start();*/
                 recordButton.Text = "Stop recording";
            }
 
            else
            {
-                startWatch.Stop();
-                stopWatch.Stop();
+               /* startWatch.Stop();
+                stopWatch.Stop();*/
                 recordButton.Text = "Start recording";
            }
         }
@@ -145,6 +145,20 @@ namespace WindowsFormsApp1
             this.Show();
             this.WindowState = FormWindowState.Normal;
             notifyIcon.Visible = false;
+        }
+
+        private void goToSaveFolderButton_Click(object sender, EventArgs e)
+        {
+            if (saveDirectoryTextBox.Text == "")
+            {
+                return;
+            }
+            else
+            {
+                string Directory = saveDirectoryTextBox.Text;
+                Process.Start("explorer", Directory);
+
+            }
         }
     }
 }
