@@ -41,7 +41,7 @@
             // 
             this.recordButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.recordButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.recordButton.Location = new System.Drawing.Point(12, 130);
+            this.recordButton.Location = new System.Drawing.Point(94, 167);
             this.recordButton.Name = "recordButton";
             this.recordButton.Size = new System.Drawing.Size(254, 27);
             this.recordButton.TabIndex = 0;
@@ -51,7 +51,7 @@
             // 
             // saveDirectoryTextBox
             // 
-            this.saveDirectoryTextBox.Location = new System.Drawing.Point(12, 43);
+            this.saveDirectoryTextBox.Location = new System.Drawing.Point(76, 72);
             this.saveDirectoryTextBox.Name = "saveDirectoryTextBox";
             this.saveDirectoryTextBox.ReadOnly = true;
             this.saveDirectoryTextBox.Size = new System.Drawing.Size(254, 20);
@@ -61,7 +61,7 @@
             // 
             this.SaveDirectorylabel.AutoSize = true;
             this.SaveDirectorylabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SaveDirectorylabel.Location = new System.Drawing.Point(90, 9);
+            this.SaveDirectorylabel.Location = new System.Drawing.Point(159, 26);
             this.SaveDirectorylabel.Name = "SaveDirectorylabel";
             this.SaveDirectorylabel.Size = new System.Drawing.Size(109, 20);
             this.SaveDirectorylabel.TabIndex = 2;
@@ -71,7 +71,7 @@
             // 
             this.browseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.browseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.browseButton.Location = new System.Drawing.Point(12, 72);
+            this.browseButton.Location = new System.Drawing.Point(76, 121);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(254, 30);
             this.browseButton.TabIndex = 3;
@@ -92,7 +92,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 167);
+            this.ClientSize = new System.Drawing.Size(457, 217);
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.SaveDirectorylabel);
             this.Controls.Add(this.saveDirectoryTextBox);
