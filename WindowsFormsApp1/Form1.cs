@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Management;
 using System.Diagnostics;
+using NAudio
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,8 +22,9 @@ namespace WindowsFormsApp1
         ManagementEventWatcher startWatch;
         ManagementEventWatcher stopWatch;
 
-        
-        
+        NAudio.Wave.WaveIn sourceStream = null;
+        NAudio.Wave.DirectSoundOut waveOut = null;
+        NAudio.Wave.WaveFileWriter waveWriter = null;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -71,10 +73,27 @@ namespace WindowsFormsApp1
                 {
 
                     //Start record
-                    
+
+                    /*int deviceNumber = sourceList.SelectedItems[0].Index;
+
+                    sourceStream = new NAudio.Wave.WaveIn();
+                    sourceStream.DeviceNumber = deviceNumber;
+                    sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);
+
+                    NAudio.Wave.WaveInProvider waveIn = new NAudio.Wave.WaveInProvider(sourceStream);
+
+                    waveOut = new NAudio.Wave.DirectSoundOut();
+                    waveOut.Init(waveIn);
+
+                    sourceStream.StartRecording();
+                    waveOut.Play();
+
+                    recordButton.Visible = false;
+                    stopRecord.Visible = true;
+
                     notifyIcon.Visible = true;
                     notifyIcon.ShowBalloonTip(1000, "Slack Recorder", "Record started", ToolTipIcon.Info);
-                    notifyIcon.Visible = false;
+                    notifyIcon.Visible = false;*/
 
                     counter = 0;
                 }
@@ -118,7 +137,6 @@ namespace WindowsFormsApp1
                 this.ShowInTaskbar = false;
                 notifyIcon.Visible = true;
                 this.Hide();
-                //notifyIcon.ShowBalloonTip(1000, "test title", "test content", ToolTipIcon.Info);
             }
         }
 
@@ -127,11 +145,6 @@ namespace WindowsFormsApp1
             this.Show();
             this.WindowState = FormWindowState.Normal;
             notifyIcon.Visible = false;
-        }
-
-        private void recordSwitch_Scroll(object sender, EventArgs e)
-        {
-
         }
     }
 }

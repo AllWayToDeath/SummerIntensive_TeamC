@@ -79,3 +79,4 @@ D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csp
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csproj.CopyComplete
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\WindowsFormsApp1.exe
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\WindowsFormsApp1.pdb
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csprojAssemblyReference.cache
