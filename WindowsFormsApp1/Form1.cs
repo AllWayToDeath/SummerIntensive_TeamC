@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Tulpep.NotificationWindow;
+using System.Drawing;
 
 namespace WindowsFormsApp1
 {
@@ -32,10 +33,6 @@ namespace WindowsFormsApp1
             stopWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace WHERE ProcessName = \"Slack.exe\""));
             stopWatch.EventArrived += new EventArrivedEventHandler(stopWatch_EventArrived);
             stopWatch.Start();
-
-            //
-
-            //
         }
 
         
@@ -51,17 +48,12 @@ namespace WindowsFormsApp1
             {
                 if (counter == 3)
                 {
-                    
+
                     //Stop record
-                    //Give notification about stop
 
-                    PopupNotifier recordStopNotifier = new PopupNotifier();
-                    recordStopNotifier.Image = Properties.Resources.recordStop;
-                    recordStopNotifier.TitleText = "Slack Recorder";
-                    recordStopNotifier.ContentText = "Call recorded";
-                    recordStopNotifier.Popup();
-
-                    //MessageBox.Show("Stop");
+                    notifyIcon.Visible = true;
+                    notifyIcon.ShowBalloonTip(1000, "Slack Recorder", "Call recorded", ToolTipIcon.Info);
+                    notifyIcon.Visible = false;
 
                     counter = 0;
                 }
@@ -77,22 +69,12 @@ namespace WindowsFormsApp1
                 
                 if (counter == 3)
                 {
-                    
+
                     //Start record
-                    //Give notification about start
-
                     
-
-                    PopupNotifier recordStartNotifier = new PopupNotifier();
-                    recordStartNotifier.Image = Properties.Resources.recordStart;
-                    recordStartNotifier.TitleText = "Slack Recorder";
-                    recordStartNotifier.ContentText = "Recording current call";
-                    recordStartNotifier.Popup();
-
-
-                    
-                    MessageBox.Show("");
-                    SendKeys.Send("{ESC}");
+                    notifyIcon.Visible = true;
+                    notifyIcon.ShowBalloonTip(1000, "Slack Recorder", "Record started", ToolTipIcon.Info);
+                    notifyIcon.Visible = false;
 
                     counter = 0;
                 }
@@ -136,6 +118,7 @@ namespace WindowsFormsApp1
                 this.ShowInTaskbar = false;
                 notifyIcon.Visible = true;
                 this.Hide();
+                //notifyIcon.ShowBalloonTip(1000, "test title", "test content", ToolTipIcon.Info);
             }
         }
 
@@ -146,5 +129,9 @@ namespace WindowsFormsApp1
             notifyIcon.Visible = false;
         }
 
+        private void recordSwitch_Scroll(object sender, EventArgs e)
+        {
+
+        }
     }
 }
