@@ -30,8 +30,9 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
+            
         }
-
+        
         ManagementEventWatcher startWatch;
         ManagementEventWatcher stopWatch;
 
@@ -184,7 +185,12 @@ namespace WindowsFormsApp1
             WaveLib.WaveStream InStr = new WaveLib.WaveStream(outputFilename);
             try
             {
-                Mp3Writer writer = new Mp3Writer(new FileStream("Готовый.mp3",
+                string str;
+                if (saveDirectoryTextBox.Text == "")
+                    str = "Готовый.mp3";
+                 else str = saveDirectoryTextBox.Text + "\\" + "Готовый.mp3";
+                MessageBox.Show(str);
+                Mp3Writer writer = new Mp3Writer(new FileStream(str,
                                                     FileMode.Create), InStr.Format);
                 try
                 {
