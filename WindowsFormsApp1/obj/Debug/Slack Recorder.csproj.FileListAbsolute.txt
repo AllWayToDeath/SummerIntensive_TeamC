@@ -79,3 +79,41 @@ D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csp
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csproj.CopyComplete
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\WindowsFormsApp1.exe
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Win32.Primitives.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.AppContext.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Console.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Globalization.Calendars.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.Compression.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.Compression.ZipFile.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.FileSystem.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.FileSystem.Primitives.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Net.Http.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Net.Sockets.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Algorithms.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Encoding.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Primitives.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Xml.ReaderWriter.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Tulpep.NotificationWindow.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\yeti.mmedia.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\yeti.mp3.dll
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\yeti.mmedia.pdb
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\yeti.mp3.pdb
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.xml
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.pdb
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.xml
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Admin\Desktop\шпионы\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.GenerateResource.Cache

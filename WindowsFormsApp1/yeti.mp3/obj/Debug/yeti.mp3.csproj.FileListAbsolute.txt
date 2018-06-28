@@ -1,0 +1,9 @@
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\bin\Debug\yeti.mp3.dll
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\bin\Debug\yeti.mp3.pdb
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\bin\Debug\yeti.mmedia.dll
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\bin\Debug\yeti.mmedia.pdb
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\obj\Debug\yeti.mp3.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\obj\Debug\Yeti.MMedia.Mp3.EditMp3Writer.resources
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\obj\Debug\yeti.mp3.csproj.GenerateResource.Cache
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\obj\Debug\yeti.mp3.dll
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mp3\obj\Debug\yeti.mp3.pdb

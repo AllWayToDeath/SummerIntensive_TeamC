@@ -1,0 +1,9 @@
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\bin\Debug\yeti.mmedia.dll
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\bin\Debug\yeti.mmedia.pdb
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\obj\Debug\yeti.mmedia.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\obj\Debug\Yeti.MMedia.EditWaveWriter.resources
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\obj\Debug\Yeti.MMedia.EditFormat.resources
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\obj\Debug\Yeti.Controls.NumericTextBox.resources
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\obj\Debug\yeti.mmedia.csproj.GenerateResource.Cache
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\obj\Debug\yeti.mmedia.dll
+C:\Users\Admin\Desktop\Запись\Запись\yeti.mmedia\obj\Debug\yeti.mmedia.pdb
