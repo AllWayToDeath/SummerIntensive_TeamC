@@ -246,5 +246,10 @@ namespace WindowsFormsApp1
         {
             Process.Start("explorer.exe", saveDirectory.SelectedPath);
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
