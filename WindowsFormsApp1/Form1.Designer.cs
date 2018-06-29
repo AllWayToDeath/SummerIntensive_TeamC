@@ -65,6 +65,7 @@
             this.saveDirectoryTextBox.ReadOnly = true;
             this.saveDirectoryTextBox.Size = new System.Drawing.Size(254, 20);
             this.saveDirectoryTextBox.TabIndex = 1;
+            this.saveDirectoryTextBox.Text = "C:\\Users\\Default\\Music";
             // 
             // SaveDirectorylabel
             // 

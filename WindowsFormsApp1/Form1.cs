@@ -2,46 +2,51 @@
 using System.Windows.Forms;
 using System.Management;
 using System.Diagnostics;
-using NAudio;
-using System.Collections;
-using System.Runtime.InteropServices;
-using System.Text;
-using Microsoft.Toolkit.Uwp.Notifications;
-using Tulpep.NotificationWindow;
-using System.Drawing;
+using NAudio.Wave;
+using CSCore;
+//using CSCore.SoundIn;
+using CSCore.Codecs.WAV;
+
 
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        WaveInEvent waveIn;
+        WaveFileWriter writer;
+
+        WasapiLoopbackCapture CaptureInstance;
+        WaveFileWriter RecordedAudioWriter;
+
+        
+
+        FolderBrowserDialog saveDirectory = new FolderBrowserDialog();
+        
+        ManagementEventWatcher startWatch;
+        ManagementEventWatcher stopWatch;
+
+        string playbackRecordFileName = "Record_from_speakers.wav";
+        string micRecordFIleName = "Record_from_mic.wav";
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        ManagementEventWatcher startWatch;
-        ManagementEventWatcher stopWatch;
-
-        NAudio.Wave.WaveIn sourceStream = null;
-        NAudio.Wave.DirectSoundOut waveOut = null;
-        NAudio.Wave.WaveFileWriter waveWriter = null;
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            /*startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace WHERE ProcessName = \"Slack.exe\""));
+            startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace WHERE ProcessName = \"Slack.exe\""));
             startWatch.EventArrived += new EventArrivedEventHandler(startWatch_EventArrived);
             startWatch.Start();
 
             stopWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace WHERE ProcessName = \"Slack.exe\""));
             stopWatch.EventArrived += new EventArrivedEventHandler(stopWatch_EventArrived);
-            stopWatch.Start();*/
+            stopWatch.Start();
+
+            saveDirectory.SelectedPath = saveDirectoryTextBox.Text;
         }
 
-        
-        
-
         public static int counter = 0;
-
 
         void stopWatch_EventArrived(object sender, EventArrivedEventArgs e)
         {
@@ -50,12 +55,55 @@ namespace WindowsFormsApp1
             {
                 if (counter == 3)
                 {
-
-                    //Stop record
-
                     notifyIcon.Visible = true;
                     notifyIcon.ShowBalloonTip(1000, "Slack Recorder", "Call recorded", ToolTipIcon.Info);
                     notifyIcon.Visible = false;
+
+                    if (waveIn != null)
+                    {
+                        waveIn.StopRecording();
+                        this.CaptureInstance.StopRecording();
+
+                        /*ProcessStartInfo psi = new ProcessStartInfo();
+
+                        psi.FileName = "lame.exe";
+                        psi.Arguments = "-V2 " + "test.wav" + " " + "test.mp3";
+
+                        psi.WindowStyle = ProcessWindowStyle.Hidden;
+
+                        Process p = Process.Start(psi);
+                        p.WaitForExit();*/
+
+                        //----------------------
+
+
+
+                        NAudio.Wave.SampleProviders.MixingSampleProvider mixer = new NAudio.Wave.SampleProviders.MixingSampleProvider(NAudio.Wave.WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));
+
+                        MessageBox.Show("YAY2");
+                        AudioFileReader audioFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
+                        AudioFileReader _audioFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playbackRecordFileName);
+
+                        MessageBox.Show("YAY3");
+                        mixer.AddMixerInput((ISampleProvider)audioFileReader);
+                        mixer.AddMixerInput((ISampleProvider)_audioFileReader);
+
+                        MessageBox.Show("YAY4");
+                        var waveProvider = mixer.ToWaveProvider();
+
+                        MessageBox.Show("YAY5");
+                        WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", waveProvider);
+
+                        ProcessStartInfo psi = new ProcessStartInfo();
+
+                        psi.FileName = "lame.exe";
+                        psi.Arguments = "-V2 " + saveDirectory.SelectedPath + "\\" + " result.wav" + " " + saveDirectory.SelectedPath + "\\" + " result.mp3";
+
+                        psi.WindowStyle = ProcessWindowStyle.Hidden;
+
+                        Process p = Process.Start(psi);
+                        p.WaitForExit();
+                    }
 
                     counter = 0;
                 }
@@ -68,36 +116,82 @@ namespace WindowsFormsApp1
             Process[] proc = Process.GetProcessesByName("Slack");
             if (proc.Length >= 8)
             {
-                
+
                 if (counter == 3)
                 {
+                    try
+                    {
+                        waveIn = new WaveInEvent();
 
-                    //Start record
+                        waveIn.DeviceNumber = 0;
+                        waveIn.WaveFormat = new NAudio.Wave.WaveFormat(44100, 32, 2);
 
-                   /* int deviceNumber = sourceList.SelectedItems[0].Index;
+                        waveIn.DataAvailable += waveIn_DataAvailable;
+                        waveIn.RecordingStopped += waveIn_RecordingStopped;
 
-                    sourceStream = new NAudio.Wave.WaveIn();
-                    sourceStream.DeviceNumber = deviceNumber;
-                    sourceStream.WaveFormat = new NAudio.Wave.WaveFormat(44100, NAudio.Wave.WaveIn.GetCapabilities(deviceNumber).Channels);
+                        writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
 
-                    NAudio.Wave.WaveInProvider waveIn = new NAudio.Wave.WaveInProvider(sourceStream);
+                        waveIn.StartRecording();
 
-                    waveOut = new NAudio.Wave.DirectSoundOut();
-                    waveOut.Init(waveIn);
+                        this.CaptureInstance = new WasapiLoopbackCapture();
+                        this.RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\"+ playbackRecordFileName, CaptureInstance.WaveFormat);
 
-                    sourceStream.StartRecording();
-                    waveOut.Play();
+                        this.CaptureInstance.DataAvailable += (s, a) =>
+                        {
+                            this.RecordedAudioWriter.Write(a.Buffer, 0, a.BytesRecorded);
+                        };
 
-                    recordButton.Visible = false;
-                    stopRecord.Visible = true;
+                        this.CaptureInstance.RecordingStopped += (s, a) =>
+                        {
+                            this.RecordedAudioWriter.Dispose();
+                            this.RecordedAudioWriter = null;
+                            CaptureInstance.Dispose();
+                        };
+
+                        this.CaptureInstance.StartRecording();
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
 
                     notifyIcon.Visible = true;
                     notifyIcon.ShowBalloonTip(1000, "Slack Recorder", "Record started", ToolTipIcon.Info);
                     notifyIcon.Visible = false;
 
-                    counter = 0;*/
+                    counter = 0;
                 }
                 counter++;
+            }
+        }
+
+        void waveIn_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new EventHandler<WaveInEventArgs>(waveIn_DataAvailable), sender, e);
+            }
+            else
+            {
+                writer.Write(e.Buffer, 0, e.BytesRecorded);
+            }
+        }
+
+        private void waveIn_RecordingStopped(object sender, EventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new EventHandler(waveIn_RecordingStopped), sender, e);
+            }
+            else
+            {
+                waveIn.Dispose();
+                waveIn = null;
+                writer.Close();
+                writer = null;
+
             }
         }
 
@@ -105,22 +199,23 @@ namespace WindowsFormsApp1
         {
            if (recordButton.Text == "Start recording")
            {
-                /*startWatch.Start();
-                stopWatch.Start();*/
+                startWatch.Start();
+                stopWatch.Start();
                 recordButton.Text = "Stop recording";
-           }
+            }
 
            else
            {
-               /* startWatch.Stop();
-                stopWatch.Stop();*/
+                startWatch.Stop();
+                stopWatch.Stop();
+                
                 recordButton.Text = "Start recording";
            }
         }
 
         private void browseButton_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog saveDirectory = new FolderBrowserDialog();
+            
 
             if (saveDirectory.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(saveDirectory.SelectedPath))
             {
@@ -149,16 +244,7 @@ namespace WindowsFormsApp1
 
         private void goToSaveFolderButton_Click(object sender, EventArgs e)
         {
-            if (saveDirectoryTextBox.Text == "")
-            {
-                return;
-            }
-            else
-            {
-                string Directory = saveDirectoryTextBox.Text;
-                Process.Start("explorer", Directory);
-
-            }
+            Process.Start("explorer.exe", saveDirectory.SelectedPath);
         }
     }
 }
