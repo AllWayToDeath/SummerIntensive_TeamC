@@ -43,6 +43,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openRecordsButton = new System.Windows.Forms.Button();
             this.goToSaveFolderButton = new System.Windows.Forms.Button();
+            this.chkStartUp = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -166,11 +167,23 @@
             this.goToSaveFolderButton.UseVisualStyleBackColor = true;
             this.goToSaveFolderButton.Click += new System.EventHandler(this.goToSaveFolderButton_Click);
             // 
+            // chkStartUp
+            // 
+            this.chkStartUp.AutoSize = true;
+            this.chkStartUp.Location = new System.Drawing.Point(290, 27);
+            this.chkStartUp.Name = "chkStartUp";
+            this.chkStartUp.Size = new System.Drawing.Size(93, 17);
+            this.chkStartUp.TabIndex = 7;
+            this.chkStartUp.Text = "Run at startup";
+            this.chkStartUp.UseVisualStyleBackColor = true;
+            this.chkStartUp.CheckedChanged += new System.EventHandler(this.chkStartUp_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(395, 199);
+            this.Controls.Add(this.chkStartUp);
             this.Controls.Add(this.goToSaveFolderButton);
             this.Controls.Add(this.openRecordsButton);
             this.Controls.Add(this.browseButton);
@@ -207,6 +220,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Button openRecordsButton;
         private System.Windows.Forms.Button goToSaveFolderButton;
+        private System.Windows.Forms.CheckBox chkStartUp;
     }
 }
 

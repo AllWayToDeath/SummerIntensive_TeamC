@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Management;
 using System.Diagnostics;
 using NAudio.Wave;
+using Microsoft.Win32;
 using CSCore;
 //using CSCore.SoundIn;
 using CSCore.Codecs.WAV;
@@ -44,6 +45,9 @@ namespace WindowsFormsApp1
             stopWatch.Start();
 
             saveDirectory.SelectedPath = saveDirectoryTextBox.Text;
+
+            this.Visible = false;
+
         }
 
         public static int counter = 0;
@@ -63,20 +67,6 @@ namespace WindowsFormsApp1
                     {
                         waveIn.StopRecording();
                         this.CaptureInstance.StopRecording();
-
-                        /*ProcessStartInfo psi = new ProcessStartInfo();
-
-                        psi.FileName = "lame.exe";
-                        psi.Arguments = "-V2 " + "test.wav" + " " + "test.mp3";
-
-                        psi.WindowStyle = ProcessWindowStyle.Hidden;
-
-                        Process p = Process.Start(psi);
-                        p.WaitForExit();*/
-
-                        //----------------------
-
-
 
                         NAudio.Wave.SampleProviders.MixingSampleProvider mixer = new NAudio.Wave.SampleProviders.MixingSampleProvider(NAudio.Wave.WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));
 
@@ -245,6 +235,17 @@ namespace WindowsFormsApp1
         private void goToSaveFolderButton_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", saveDirectory.SelectedPath);
+        }
+
+        private void chkStartUp_CheckedChanged(object sender, EventArgs e)
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey
+            ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+            if (chkStartUp.Checked)
+                rk.SetValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, Application.ExecutablePath);
+            else
+                rk.DeleteValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, false);
         }
     }
 }
