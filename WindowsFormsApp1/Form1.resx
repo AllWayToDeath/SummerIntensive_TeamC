@@ -9468,6 +9468,17 @@
         AADwDwAA
 </value>
   </data>
+  <data name="openRecordsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAVBJREFUeF7t
+        mUFqw1AMRL1wdv6/ELfbXqppmrS9/zXaMdHGoO+dJErfA60i0MwzhoRM8zy/ntf1p3KW1j6nKrxAFbP0
+        /m2RcvHCVE2JBL0C3QtTNTUSTqcnN8yyhL6bku/fRQISHneRgITH3d6/bCUPJAgkiAMJd1sJAQkCCQIJ
+        AgkCCQIJAgkCCQIJAgkCCQIJYigh+Ieby4GEm62EgASBBIEEgQSBBPEnJLTe32wlhJGE1trFVvIYSbCP
+        wxhJsI/z0NO+VgTpvV8q7u4YldfTebaVEEbldXe1lXgOyr/YSggH5UOl76C8H4LyUVDev0v5FCjvh6B8
+        FJT371I+hf9dvrWPQYjo8u+Du5RPgfJ+CMpHQXn/LuVTqCqv7xeUd+5SPgXK+yEoHwXl/buJ5Qchqia1
+        /IYXomrSy294QSqmpPyGDp+9QJmjDHn/0u6Ypl/adznfHWfXDQAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>123, 17</value>
   </metadata>

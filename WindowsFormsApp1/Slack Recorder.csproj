@@ -166,6 +166,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="_gotoarrow.png" />
     <None Include="stopRecord.png" />
     <None Include="recordStart.png" />
     <Content Include="Slack.ico" />

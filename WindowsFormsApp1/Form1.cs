@@ -3,10 +3,7 @@ using System.Windows.Forms;
 using System.Management;
 using System.Diagnostics;
 using NAudio.Wave;
-using CSCore;
-//using CSCore.SoundIn;
-using CSCore.Codecs.WAV;
-
+using Microsoft.Win32;
 
 namespace WindowsFormsApp1
 {
@@ -44,6 +41,18 @@ namespace WindowsFormsApp1
             stopWatch.Start();
 
             saveDirectory.SelectedPath = saveDirectoryTextBox.Text;
+
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+            if (runAtStartUpCheckBox.Checked)
+            {
+                rk.SetValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, Application.ExecutablePath);
+            }
+
+            else
+            {
+                rk.DeleteValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, false);
+            }
         }
 
         public static int counter = 0;
@@ -94,14 +103,18 @@ namespace WindowsFormsApp1
                         MessageBox.Show("YAY5");
                         WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", waveProvider);
 
+                        MessageBox.Show("YAY6");
                         ProcessStartInfo psi = new ProcessStartInfo();
 
+                        MessageBox.Show("YAY7");
                         psi.FileName = "lame.exe";
-                        psi.Arguments = "-V2 " + saveDirectory.SelectedPath + "\\" + " result.wav" + " " + saveDirectory.SelectedPath + "\\" + " result.mp3";
-
+                        psi.Arguments = "-V2 " + saveDirectory.SelectedPath + @"\" + "result.wav " + saveDirectory.SelectedPath + @"\" + "result.mp3";
                         psi.WindowStyle = ProcessWindowStyle.Hidden;
 
+                        MessageBox.Show("YAY8");
                         Process p = Process.Start(psi);
+
+                        MessageBox.Show("YAY9");
                         p.WaitForExit();
                     }
 
@@ -191,32 +204,11 @@ namespace WindowsFormsApp1
                 waveIn = null;
                 writer.Close();
                 writer = null;
-
             }
-        }
-
-        private void recordButton_Click(object sender, EventArgs e)
-        {
-           if (recordButton.Text == "Start recording")
-           {
-                startWatch.Start();
-                stopWatch.Start();
-                recordButton.Text = "Stop recording";
-            }
-
-           else
-           {
-                startWatch.Stop();
-                stopWatch.Stop();
-                
-                recordButton.Text = "Start recording";
-           }
         }
 
         private void browseButton_Click(object sender, EventArgs e)
         {
-            
-
             if (saveDirectory.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(saveDirectory.SelectedPath))
             {
                 saveDirectoryTextBox.Text = saveDirectory.SelectedPath;
@@ -250,6 +242,25 @@ namespace WindowsFormsApp1
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void recordActivatedCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (recordActivatedCheckBox.Checked)
+            {
+                startWatch.Start();
+                stopWatch.Start();
+            }
+            else
+            {
+                startWatch.Stop();
+                stopWatch.Stop();
+            }
+        }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

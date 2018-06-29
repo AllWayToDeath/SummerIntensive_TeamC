@@ -38,3 +38,43 @@ C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Rec
 C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.CopyComplete
 C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\CSCore.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Win32.Primitives.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\NAudio.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.AppContext.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Console.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Globalization.Calendars.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.Compression.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.Compression.ZipFile.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.FileSystem.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.IO.FileSystem.Primitives.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Net.Http.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Net.Sockets.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Algorithms.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Encoding.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.Primitives.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Xml.ReaderWriter.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Tulpep.NotificationWindow.dll
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\CSCore.xml
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.xml
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\NAudio.xml
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.pdb
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\QueryString.NETCore.xml
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csprojAssemblyReference.cache
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.GenerateResource.cache
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.CoreCompileInputs.cache
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.CopyComplete
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
