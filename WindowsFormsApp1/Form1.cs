@@ -247,5 +247,10 @@ namespace WindowsFormsApp1
             else
                 rk.DeleteValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, false);
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
