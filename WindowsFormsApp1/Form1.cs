@@ -3,6 +3,9 @@ using System.Windows.Forms;
 using System.Management;
 using System.Diagnostics;
 using NAudio.Wave;
+using CSCore;
+//using CSCore.SoundIn;
+using CSCore.Codecs.WAV;
 
 
 namespace WindowsFormsApp1
@@ -12,12 +15,18 @@ namespace WindowsFormsApp1
         WaveInEvent waveIn;
         WaveFileWriter writer;
 
-        FolderBrowserDialog saveDirectory = new FolderBrowserDialog();
+        WasapiLoopbackCapture CaptureInstance;
+        WaveFileWriter RecordedAudioWriter;
 
+        
+
+        FolderBrowserDialog saveDirectory = new FolderBrowserDialog();
+        
         ManagementEventWatcher startWatch;
         ManagementEventWatcher stopWatch;
 
-        string outputFilename = "test.wav";
+        string playbackRecordFileName = "Record_from_speakers.wav";
+        string micRecordFIleName = "Record_from_mic.wav";
 
         public Form1()
         {
@@ -53,11 +62,42 @@ namespace WindowsFormsApp1
                     if (waveIn != null)
                     {
                         waveIn.StopRecording();
+                        this.CaptureInstance.StopRecording();
+
+                        /*ProcessStartInfo psi = new ProcessStartInfo();
+
+                        psi.FileName = "lame.exe";
+                        psi.Arguments = "-V2 " + "test.wav" + " " + "test.mp3";
+
+                        psi.WindowStyle = ProcessWindowStyle.Hidden;
+
+                        Process p = Process.Start(psi);
+                        p.WaitForExit();*/
+
+                        //----------------------
+
+
+
+                        NAudio.Wave.SampleProviders.MixingSampleProvider mixer = new NAudio.Wave.SampleProviders.MixingSampleProvider(NAudio.Wave.WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));
+
+                        MessageBox.Show("YAY2");
+                        AudioFileReader audioFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
+                        AudioFileReader _audioFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playbackRecordFileName);
+
+                        MessageBox.Show("YAY3");
+                        mixer.AddMixerInput((ISampleProvider)audioFileReader);
+                        mixer.AddMixerInput((ISampleProvider)_audioFileReader);
+
+                        MessageBox.Show("YAY4");
+                        var waveProvider = mixer.ToWaveProvider();
+
+                        MessageBox.Show("YAY5");
+                        WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", waveProvider);
 
                         ProcessStartInfo psi = new ProcessStartInfo();
 
                         psi.FileName = "lame.exe";
-                        psi.Arguments = "-V2 " + "test.wav" + " " + "test.mp3";
+                        psi.Arguments = "-V2 " + saveDirectory.SelectedPath + "\\" + " result.wav" + " " + saveDirectory.SelectedPath + "\\" + " result.mp3";
 
                         psi.WindowStyle = ProcessWindowStyle.Hidden;
 
@@ -84,14 +124,32 @@ namespace WindowsFormsApp1
                         waveIn = new WaveInEvent();
 
                         waveIn.DeviceNumber = 0;
-                        waveIn.WaveFormat = new NAudio.Wave.WaveFormat(41000, 1);
+                        waveIn.WaveFormat = new NAudio.Wave.WaveFormat(44100, 32, 2);
 
                         waveIn.DataAvailable += waveIn_DataAvailable;
                         waveIn.RecordingStopped += waveIn_RecordingStopped;
 
-                        writer = new WaveFileWriter(outputFilename, waveIn.WaveFormat);
+                        writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
 
                         waveIn.StartRecording();
+
+                        this.CaptureInstance = new WasapiLoopbackCapture();
+                        this.RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\"+ playbackRecordFileName, CaptureInstance.WaveFormat);
+
+                        this.CaptureInstance.DataAvailable += (s, a) =>
+                        {
+                            this.RecordedAudioWriter.Write(a.Buffer, 0, a.BytesRecorded);
+                        };
+
+                        this.CaptureInstance.RecordingStopped += (s, a) =>
+                        {
+                            this.RecordedAudioWriter.Dispose();
+                            this.RecordedAudioWriter = null;
+                            CaptureInstance.Dispose();
+                        };
+
+                        this.CaptureInstance.StartRecording();
+
                     }
 
                     catch (Exception ex)
