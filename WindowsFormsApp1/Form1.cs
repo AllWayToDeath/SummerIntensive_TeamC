@@ -4,6 +4,8 @@ using System.Management;
 using System.Diagnostics;
 using NAudio.Wave;
 using Microsoft.Win32;
+using System.Threading;
+using System.IO;
 
 namespace WindowsFormsApp1
 {
@@ -14,9 +16,7 @@ namespace WindowsFormsApp1
 
         WasapiLoopbackCapture CaptureInstance;
         WaveFileWriter RecordedAudioWriter;
-
         
-
         FolderBrowserDialog saveDirectory = new FolderBrowserDialog();
         
         ManagementEventWatcher startWatch;
@@ -73,55 +73,58 @@ namespace WindowsFormsApp1
                         waveIn.StopRecording();
                         this.CaptureInstance.StopRecording();
 
-                        /*ProcessStartInfo psi = new ProcessStartInfo();
+                        MixTwoSamples();
 
-                        psi.FileName = "lame.exe";
-                        psi.Arguments = "-V2 " + "test.wav" + " " + "test.mp3";
+                        ConvertToMP3();
 
-                        psi.WindowStyle = ProcessWindowStyle.Hidden;
-
-                        Process p = Process.Start(psi);
-                        p.WaitForExit();*/
-
-                        //----------------------
-
-
-
-                        NAudio.Wave.SampleProviders.MixingSampleProvider mixer = new NAudio.Wave.SampleProviders.MixingSampleProvider(NAudio.Wave.WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));
-
-                        MessageBox.Show("YAY2");
-                        AudioFileReader audioFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
-                        AudioFileReader _audioFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playbackRecordFileName);
-
-                        MessageBox.Show("YAY3");
-                        mixer.AddMixerInput((ISampleProvider)audioFileReader);
-                        mixer.AddMixerInput((ISampleProvider)_audioFileReader);
-
-                        MessageBox.Show("YAY4");
-                        var waveProvider = mixer.ToWaveProvider();
-
-                        MessageBox.Show("YAY5");
-                        WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", waveProvider);
-
-                        MessageBox.Show("YAY6");
-                        ProcessStartInfo psi = new ProcessStartInfo();
-
-                        MessageBox.Show("YAY7");
-                        psi.FileName = "lame.exe";
-                        psi.Arguments = "-V2 " + saveDirectory.SelectedPath + @"\" + "result.wav " + saveDirectory.SelectedPath + @"\" + "result.mp3";
-                        psi.WindowStyle = ProcessWindowStyle.Hidden;
-
-                        MessageBox.Show("YAY8");
-                        Process p = Process.Start(psi);
-
-                        MessageBox.Show("YAY9");
-                        p.WaitForExit();
+                        AddRecordToDabase();
                     }
 
                     counter = 0;
                 }
                 counter++;
             }
+        }
+
+        private void AddRecordToDabase()
+        {
+            
+        }
+
+        void MixTwoSamples()
+        {
+            NAudio.Wave.SampleProviders.MixingSampleProvider mixer = new NAudio.Wave.SampleProviders.MixingSampleProvider(NAudio.Wave.WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));
+
+            //Найти способ избавиться от этого мсгбокса, без него AudioFileReader не инициализируется
+            MessageBox.Show("Click me to get a record");
+            
+            AudioFileReader MicFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
+            AudioFileReader SpeakerFilereader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playbackRecordFileName);
+
+            AddSampleInMixer(mixer, MicFileReader);
+            AddSampleInMixer(mixer, SpeakerFilereader);
+
+            var waveProvider = mixer.ToWaveProvider();
+
+            WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", waveProvider);
+        }
+
+        void AddSampleInMixer(NAudio.Wave.SampleProviders.MixingSampleProvider mixer, AudioFileReader audioFileReader)
+        {
+            mixer.AddMixerInput((ISampleProvider)audioFileReader);
+        }
+
+        void ConvertToMP3()
+        {
+            ProcessStartInfo psi = new ProcessStartInfo();
+
+            psi.FileName = "lame.exe";
+            psi.Arguments = "-V2 " + saveDirectory.SelectedPath + @"\" + "result.wav " + saveDirectory.SelectedPath + @"\" + DateTime.Now.ToString("dd.MM.yyyy_HH.mm") + ".mp3";
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+
+            Process p = Process.Start(psi);
+
+            p.WaitForExit();
         }
 
         void startWatch_EventArrived(object sender, EventArrivedEventArgs e)
@@ -258,9 +261,44 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        bool isExpanded = false;
+
+        private void openRecordsButton_Click(object sender, EventArgs e)
+        {
+            if (!isExpanded)
+            {
+                for (int i = 0; i < 65; i++)
+                {
+                    this.Width += 5;
+                    Thread.Sleep(5);
+                }
+                isExpanded = true;
+            }
+
+            else
+            {
+                for (int i = 0; i < 65; i++)
+                {
+                    this.Width -= 5;
+                    Thread.Sleep(5);
+                }
+                isExpanded = false;
+            }
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

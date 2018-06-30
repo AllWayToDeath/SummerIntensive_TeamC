@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.saveDirectoryTextBox = new System.Windows.Forms.TextBox();
             this.browseButton = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,23 +42,24 @@
             this.runAtStartUpCheckBox = new System.Windows.Forms.CheckBox();
             this.recordActivatedCheckBox = new System.Windows.Forms.CheckBox();
             this.SaveDirectorylabel = new System.Windows.Forms.Label();
+            this.saveDirectoryTextBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.menuToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.statisticsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statisticsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openButton = new System.Windows.Forms.Button();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // saveDirectoryTextBox
-            // 
-            this.saveDirectoryTextBox.Location = new System.Drawing.Point(16, 68);
-            this.saveDirectoryTextBox.Name = "saveDirectoryTextBox";
-            this.saveDirectoryTextBox.ReadOnly = true;
-            this.saveDirectoryTextBox.Size = new System.Drawing.Size(209, 20);
-            this.saveDirectoryTextBox.TabIndex = 1;
-            this.saveDirectoryTextBox.Text = "C:\\Users\\Default\\Music";
             // 
             // browseButton
             // 
@@ -126,6 +126,7 @@
             this.openRecordsButton.Size = new System.Drawing.Size(77, 74);
             this.openRecordsButton.TabIndex = 5;
             this.openRecordsButton.UseVisualStyleBackColor = true;
+            this.openRecordsButton.Click += new System.EventHandler(this.openRecordsButton_Click);
             // 
             // goToSaveFolderButton
             // 
@@ -172,26 +173,35 @@
             this.SaveDirectorylabel.TabIndex = 2;
             this.SaveDirectorylabel.Text = "Save directory";
             // 
+            // saveDirectoryTextBox
+            // 
+            this.saveDirectoryTextBox.Location = new System.Drawing.Point(16, 68);
+            this.saveDirectoryTextBox.Name = "saveDirectoryTextBox";
+            this.saveDirectoryTextBox.ReadOnly = true;
+            this.saveDirectoryTextBox.Size = new System.Drawing.Size(209, 20);
+            this.saveDirectoryTextBox.TabIndex = 9;
+            this.saveDirectoryTextBox.Text = "C:\\Users\\Default\\Music";
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem1,
-            this.statisticsToolStripMenuItem1,
-            this.aboutToolStripMenuItem1});
+            this.menuToolStripMenuItem2,
+            this.statisticsToolStripMenuItem2,
+            this.aboutToolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(343, 24);
-            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Size = new System.Drawing.Size(346, 24);
+            this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // menuToolStripMenuItem1
+            // menuToolStripMenuItem2
             // 
-            this.menuToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuToolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem1,
-            this.exitToolStripMenuItem1});
-            this.menuToolStripMenuItem1.Name = "menuToolStripMenuItem1";
-            this.menuToolStripMenuItem1.Size = new System.Drawing.Size(50, 20);
-            this.menuToolStripMenuItem1.Text = "Menu";
+            this.exitToolStripMenuItem2});
+            this.menuToolStripMenuItem2.Name = "menuToolStripMenuItem2";
+            this.menuToolStripMenuItem2.Size = new System.Drawing.Size(50, 20);
+            this.menuToolStripMenuItem2.Text = "Menu";
             // 
             // editToolStripMenuItem1
             // 
@@ -199,12 +209,29 @@
             this.editToolStripMenuItem1.Size = new System.Drawing.Size(94, 22);
             this.editToolStripMenuItem1.Text = "Edit";
             // 
-            // exitToolStripMenuItem1
+            // exitToolStripMenuItem2
             // 
-            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem1.Text = "Exit";
-            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
+            this.exitToolStripMenuItem2.Name = "exitToolStripMenuItem2";
+            this.exitToolStripMenuItem2.Size = new System.Drawing.Size(94, 22);
+            this.exitToolStripMenuItem2.Text = "Exit";
+            // 
+            // statisticsToolStripMenuItem2
+            // 
+            this.statisticsToolStripMenuItem2.Name = "statisticsToolStripMenuItem2";
+            this.statisticsToolStripMenuItem2.Size = new System.Drawing.Size(65, 20);
+            this.statisticsToolStripMenuItem2.Text = "Statistics";
+            // 
+            // aboutToolStripMenuItem2
+            // 
+            this.aboutToolStripMenuItem2.Name = "aboutToolStripMenuItem2";
+            this.aboutToolStripMenuItem2.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem2.Text = "About";
+            // 
+            // menuToolStripMenuItem1
+            // 
+            this.menuToolStripMenuItem1.Name = "menuToolStripMenuItem1";
+            this.menuToolStripMenuItem1.Size = new System.Drawing.Size(50, 20);
+            this.menuToolStripMenuItem1.Text = "Menu";
             // 
             // statisticsToolStripMenuItem1
             // 
@@ -218,35 +245,87 @@
             this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem1.Text = "About";
             // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            // 
+            // exitToolStripMenuItem1
+            // 
+            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem1.Text = "Exit";
+            // 
+            // openButton
+            // 
+            this.openButton.Location = new System.Drawing.Point(347, 158);
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(150, 23);
+            this.openButton.TabIndex = 12;
+            this.openButton.Text = "Open selected record";
+            this.openButton.UseVisualStyleBackColor = true;
+            this.openButton.Click += new System.EventHandler(this.openButton_Click);
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(503, 158);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(147, 23);
+            this.deleteButton.TabIndex = 13;
+            this.deleteButton.Text = "Delete selected record";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridView1.Location = new System.Drawing.Point(347, 33);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(303, 119);
+            this.dataGridView1.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(343, 201);
+            this.ClientSize = new System.Drawing.Size(346, 201);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.deleteButton);
+            this.Controls.Add(this.openButton);
+            this.Controls.Add(this.saveDirectoryTextBox);
             this.Controls.Add(this.recordActivatedCheckBox);
             this.Controls.Add(this.runAtStartUpCheckBox);
             this.Controls.Add(this.goToSaveFolderButton);
             this.Controls.Add(this.openRecordsButton);
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.SaveDirectorylabel);
-            this.Controls.Add(this.saveDirectoryTextBox);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Slack recorder";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TextBox saveDirectoryTextBox;
         private System.Windows.Forms.Button browseButton;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
@@ -259,12 +338,21 @@
         private System.Windows.Forms.CheckBox runAtStartUpCheckBox;
         private System.Windows.Forms.CheckBox recordActivatedCheckBox;
         private System.Windows.Forms.Label SaveDirectorylabel;
+        private System.Windows.Forms.TextBox saveDirectoryTextBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem2;
+        private System.Windows.Forms.Button openButton;
+        private System.Windows.Forms.Button deleteButton;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
