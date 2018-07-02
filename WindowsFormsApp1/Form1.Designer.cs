@@ -43,12 +43,6 @@
             this.recordActivatedCheckBox = new System.Windows.Forms.CheckBox();
             this.SaveDirectorylabel = new System.Windows.Forms.Label();
             this.saveDirectoryTextBox = new System.Windows.Forms.TextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.menuToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.statisticsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statisticsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +51,6 @@
             this.openButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,7 +58,7 @@
             // 
             this.browseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.browseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.browseButton.Location = new System.Drawing.Point(245, 68);
+            this.browseButton.Location = new System.Drawing.Point(245, 42);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(77, 23);
             this.browseButton.TabIndex = 3;
@@ -79,7 +72,7 @@
             this.notifyIcon.BalloonTipText = "text";
             this.notifyIcon.BalloonTipTitle = "title";
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "notifyIcon";
+            this.notifyIcon.Text = "Slack Recorder";
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
             // menuToolStripMenuItem
@@ -121,7 +114,7 @@
             this.openRecordsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.openRecordsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.openRecordsButton.Image = ((System.Drawing.Image)(resources.GetObject("openRecordsButton.Image")));
-            this.openRecordsButton.Location = new System.Drawing.Point(245, 107);
+            this.openRecordsButton.Location = new System.Drawing.Point(245, 79);
             this.openRecordsButton.Name = "openRecordsButton";
             this.openRecordsButton.Size = new System.Drawing.Size(77, 74);
             this.openRecordsButton.TabIndex = 5;
@@ -132,7 +125,7 @@
             // 
             this.goToSaveFolderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.goToSaveFolderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.goToSaveFolderButton.Location = new System.Drawing.Point(16, 107);
+            this.goToSaveFolderButton.Location = new System.Drawing.Point(16, 79);
             this.goToSaveFolderButton.Name = "goToSaveFolderButton";
             this.goToSaveFolderButton.Size = new System.Drawing.Size(209, 34);
             this.goToSaveFolderButton.TabIndex = 6;
@@ -143,19 +136,20 @@
             // runAtStartUpCheckBox
             // 
             this.runAtStartUpCheckBox.AutoSize = true;
-            this.runAtStartUpCheckBox.Location = new System.Drawing.Point(132, 164);
+            this.runAtStartUpCheckBox.Location = new System.Drawing.Point(132, 136);
             this.runAtStartUpCheckBox.Name = "runAtStartUpCheckBox";
             this.runAtStartUpCheckBox.Size = new System.Drawing.Size(93, 17);
             this.runAtStartUpCheckBox.TabIndex = 7;
             this.runAtStartUpCheckBox.Text = "Run at startup";
             this.runAtStartUpCheckBox.UseVisualStyleBackColor = true;
+            this.runAtStartUpCheckBox.CheckedChanged += new System.EventHandler(this.runAtStartUpCheckBox_CheckedChanged);
             // 
             // recordActivatedCheckBox
             // 
             this.recordActivatedCheckBox.AutoSize = true;
             this.recordActivatedCheckBox.Checked = true;
             this.recordActivatedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.recordActivatedCheckBox.Location = new System.Drawing.Point(16, 164);
+            this.recordActivatedCheckBox.Location = new System.Drawing.Point(16, 136);
             this.recordActivatedCheckBox.Name = "recordActivatedCheckBox";
             this.recordActivatedCheckBox.Size = new System.Drawing.Size(75, 17);
             this.recordActivatedCheckBox.TabIndex = 8;
@@ -167,7 +161,7 @@
             // 
             this.SaveDirectorylabel.AutoSize = true;
             this.SaveDirectorylabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SaveDirectorylabel.Location = new System.Drawing.Point(12, 33);
+            this.SaveDirectorylabel.Location = new System.Drawing.Point(12, 9);
             this.SaveDirectorylabel.Name = "SaveDirectorylabel";
             this.SaveDirectorylabel.Size = new System.Drawing.Size(109, 20);
             this.SaveDirectorylabel.TabIndex = 2;
@@ -175,57 +169,12 @@
             // 
             // saveDirectoryTextBox
             // 
-            this.saveDirectoryTextBox.Location = new System.Drawing.Point(16, 68);
+            this.saveDirectoryTextBox.Location = new System.Drawing.Point(16, 42);
             this.saveDirectoryTextBox.Name = "saveDirectoryTextBox";
             this.saveDirectoryTextBox.ReadOnly = true;
             this.saveDirectoryTextBox.Size = new System.Drawing.Size(209, 20);
             this.saveDirectoryTextBox.TabIndex = 9;
             this.saveDirectoryTextBox.Text = "C:\\Users\\Default\\Music";
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem2,
-            this.statisticsToolStripMenuItem2,
-            this.aboutToolStripMenuItem2});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(346, 24);
-            this.menuStrip1.TabIndex = 10;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // menuToolStripMenuItem2
-            // 
-            this.menuToolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editToolStripMenuItem1,
-            this.exitToolStripMenuItem2});
-            this.menuToolStripMenuItem2.Name = "menuToolStripMenuItem2";
-            this.menuToolStripMenuItem2.Size = new System.Drawing.Size(50, 20);
-            this.menuToolStripMenuItem2.Text = "Menu";
-            // 
-            // editToolStripMenuItem1
-            // 
-            this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
-            this.editToolStripMenuItem1.Size = new System.Drawing.Size(94, 22);
-            this.editToolStripMenuItem1.Text = "Edit";
-            // 
-            // exitToolStripMenuItem2
-            // 
-            this.exitToolStripMenuItem2.Name = "exitToolStripMenuItem2";
-            this.exitToolStripMenuItem2.Size = new System.Drawing.Size(94, 22);
-            this.exitToolStripMenuItem2.Text = "Exit";
-            // 
-            // statisticsToolStripMenuItem2
-            // 
-            this.statisticsToolStripMenuItem2.Name = "statisticsToolStripMenuItem2";
-            this.statisticsToolStripMenuItem2.Size = new System.Drawing.Size(65, 20);
-            this.statisticsToolStripMenuItem2.Text = "Statistics";
-            // 
-            // aboutToolStripMenuItem2
-            // 
-            this.aboutToolStripMenuItem2.Name = "aboutToolStripMenuItem2";
-            this.aboutToolStripMenuItem2.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem2.Text = "About";
             // 
             // menuToolStripMenuItem1
             // 
@@ -259,7 +208,7 @@
             // 
             // openButton
             // 
-            this.openButton.Location = new System.Drawing.Point(347, 158);
+            this.openButton.Location = new System.Drawing.Point(347, 130);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(150, 23);
             this.openButton.TabIndex = 12;
@@ -269,7 +218,7 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(503, 158);
+            this.deleteButton.Location = new System.Drawing.Point(503, 130);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(147, 23);
             this.deleteButton.TabIndex = 13;
@@ -284,22 +233,20 @@
             this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView1.Location = new System.Drawing.Point(347, 33);
+            this.dataGridView1.Location = new System.Drawing.Point(347, 12);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(303, 119);
+            this.dataGridView1.Size = new System.Drawing.Size(303, 112);
             this.dataGridView1.TabIndex = 14;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(346, 201);
+            this.ClientSize = new System.Drawing.Size(345, 163);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.openButton);
@@ -310,15 +257,12 @@
             this.Controls.Add(this.openRecordsButton);
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.SaveDirectorylabel);
-            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Slack recorder";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -339,17 +283,11 @@
         private System.Windows.Forms.CheckBox recordActivatedCheckBox;
         private System.Windows.Forms.Label SaveDirectorylabel;
         private System.Windows.Forms.TextBox saveDirectoryTextBox;
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem2;
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.DataGridView dataGridView1;

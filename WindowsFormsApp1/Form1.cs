@@ -5,7 +5,13 @@ using System.Diagnostics;
 using NAudio.Wave;
 using Microsoft.Win32;
 using System.Threading;
+using System.Collections.Generic;
+using System.Collections;
 using System.IO;
+using System.Configuration;
+using SlackRecorder.Model;
+using System.Data.SqlClient;
+using System.ComponentModel;
 
 namespace WindowsFormsApp1
 {
@@ -22,11 +28,16 @@ namespace WindowsFormsApp1
         ManagementEventWatcher startWatch;
         ManagementEventWatcher stopWatch;
 
+        Repository _rep;
+        BindingList<Record> bindingList;
+
         string playbackRecordFileName = "Record_from_speakers.wav";
         string micRecordFIleName = "Record_from_mic.wav";
 
         public Form1()
         {
+            _rep = new Repository();
+
             InitializeComponent();
         }
 
@@ -42,17 +53,22 @@ namespace WindowsFormsApp1
 
             saveDirectory.SelectedPath = saveDirectoryTextBox.Text;
 
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            //dataGridView1.Dispose();
 
-            if (runAtStartUpCheckBox.Checked)
-            {
-                rk.SetValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, Application.ExecutablePath);
-            }
+            FeelGrid();
+        }
 
-            else
-            {
-                rk.DeleteValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, false);
-            }
+        private void ReadRecords()
+        {           
+            List<Record> clients = _rep.GetRecords();
+
+            bindingList = new BindingList<Record>(clients);
+            this.dataGridView1.DataSource = new BindingSource(bindingList, null);
+        }
+
+        void FeelGrid()
+        {
+            ReadRecords();
         }
 
         public static int counter = 0;
@@ -77,7 +93,7 @@ namespace WindowsFormsApp1
 
                         ConvertToMP3();
 
-                        AddRecordToDabase();
+                        AddToDatabase();                       
                     }
 
                     counter = 0;
@@ -86,9 +102,16 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void AddRecordToDabase()
+        void AddToDatabase()
         {
-            
+            Record record = new Record();
+
+            record.Date = DateTime.Now.ToString("dd.MM.yyyy");
+            record.Time = DateTime.Now.ToString("HH.mm");
+
+            _rep.Insert(record);
+
+            //FeelGrid(); вызывает ошибку при повторном использовании
         }
 
         void MixTwoSamples()
@@ -132,7 +155,6 @@ namespace WindowsFormsApp1
             Process[] proc = Process.GetProcessesByName("Slack");
             if (proc.Length >= 8)
             {
-
                 if (counter == 3)
                 {
                     try
@@ -159,7 +181,7 @@ namespace WindowsFormsApp1
 
                         this.CaptureInstance.RecordingStopped += (s, a) =>
                         {
-                            this.RecordedAudioWriter.Dispose();
+                            this.RecordedAudioWriter.Dispose();  //здесь может быть баг
                             this.RecordedAudioWriter = null;
                             CaptureInstance.Dispose();
                         };
@@ -293,12 +315,44 @@ namespace WindowsFormsApp1
 
         private void openButton_Click(object sender, EventArgs e)
         {
+            //string argument = "/select, \"" + saveDirectory.SelectedPath + dataGridView1.CurrentRow.Cells[1].Value + "_" + dataGridView1.CurrentRow.Cells[2].Value + "\"";
 
+            //Process p = Process.Start("explorer.exe", argument);
+
+            //p.WaitForExit();
+
+            string selectedFile = saveDirectory.SelectedPath + "\\" + dataGridView1.CurrentRow.Cells[1].Value.ToString() + "_" + dataGridView1.CurrentRow.Cells[2].Value.ToString() + ".mp3";
+
+            Process.Start("explorer.exe", string.Format("/select,\"{0}\"", selectedFile));
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
+            Record record = (Record)dataGridView1.CurrentRow.DataBoundItem;
+            if (!record.Id.HasValue)
+            {
+                MessageBox.Show("Select a row first");
+            }
+            else
+            {
+                _rep.Delete(record);
+                ReadRecords();
+            }
+        }
 
+        private void runAtStartUpCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+            if (runAtStartUpCheckBox.Checked)
+            {
+                rk.SetValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, Application.ExecutablePath);
+            }
+
+            else
+            {
+                rk.DeleteValue(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, false);
+            }
         }
     }
 }
