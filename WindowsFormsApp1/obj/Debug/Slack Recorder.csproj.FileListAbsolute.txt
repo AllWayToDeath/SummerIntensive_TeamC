@@ -78,3 +78,16 @@ D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.c
 D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\Slack Recorder.csproj.CopyComplete
 D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 D:\Programming\SummerIntensive_TeamC\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\EntityFramework.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\EntityFramework.xml
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Data.SQLite.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Data.SQLite.xml
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\System.Data.SQLite.dll.config
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\libmp3lame.32.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\libmp3lame.64.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\NAudio.Lame.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\policy.2.0.taglib-sharp.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\taglib-sharp.dll
+C:\Users\Oleg\Desktop\SummerIntensive_TeamC\WindowsFormsApp1\bin\Debug\policy.2.0.taglib-sharp.config
