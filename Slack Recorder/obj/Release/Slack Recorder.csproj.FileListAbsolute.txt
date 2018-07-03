@@ -1,0 +1,12 @@
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\Slack Recorder.exe.config
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\Slack Recorder.exe
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\Slack Recorder.pdb
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\NAudio.dll
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\NAudio.xml
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack_Recorder.Form1.resources
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack_Recorder.Properties.Resources.resources
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.csproj.GenerateResource.cache
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.csproj.CoreCompileInputs.cache
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.csproj.CopyComplete
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.exe
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.pdb
