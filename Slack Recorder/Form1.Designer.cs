@@ -43,6 +43,7 @@
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.helpButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -144,7 +145,7 @@
             this.deleteSelectedButton.Name = "deleteSelectedButton";
             this.deleteSelectedButton.Size = new System.Drawing.Size(142, 23);
             this.deleteSelectedButton.TabIndex = 14;
-            this.deleteSelectedButton.Text = "Delete selected button";
+            this.deleteSelectedButton.Text = "Delete selected record";
             this.deleteSelectedButton.UseVisualStyleBackColor = true;
             this.deleteSelectedButton.Click += new System.EventHandler(this.deleteSelectedButton_Click);
             // 
@@ -176,11 +177,23 @@
             this.dataGridView.Size = new System.Drawing.Size(297, 105);
             this.dataGridView.TabIndex = 0;
             // 
+            // helpButton
+            // 
+            this.helpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.helpButton.Image = ((System.Drawing.Image)(resources.GetObject("helpButton.Image")));
+            this.helpButton.Location = new System.Drawing.Point(302, 9);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(21, 23);
+            this.helpButton.TabIndex = 15;
+            this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(714, 176);
+            this.ClientSize = new System.Drawing.Size(328, 165);
+            this.Controls.Add(this.helpButton);
             this.Controls.Add(this.deleteSelectedButton);
             this.Controls.Add(this.openRecordButton);
             this.Controls.Add(this.runAtSturtUpCheckBox);
@@ -217,6 +230,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.Button helpButton;
     }
 }
 

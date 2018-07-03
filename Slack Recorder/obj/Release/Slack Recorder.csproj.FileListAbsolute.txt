@@ -10,3 +10,4 @@ D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Re
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.csproj.CopyComplete
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.exe
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.pdb
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.csprojAssemblyReference.cache

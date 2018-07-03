@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using System.Management;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using System.IO;
 
 namespace Slack_Recorder
 {
@@ -312,6 +313,7 @@ namespace Slack_Recorder
             {
                 _rep.Delete(record);
                 ReadRecords();
+                File.Delete(saveDirectory.SelectedPath + "\\" + record.Date + "_" + record.Time + ".mp3");
             }
         }
 
@@ -320,6 +322,11 @@ namespace Slack_Recorder
             string selectedFile = saveDirectory.SelectedPath + "\\" + dataGridView.CurrentRow.Cells[1].Value.ToString() + "_" + dataGridView.CurrentRow.Cells[2].Value.ToString() + ".mp3";
 
             Process.Start("explorer.exe", string.Format("/select,\"{0}\"", selectedFile));
+        }
+
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
