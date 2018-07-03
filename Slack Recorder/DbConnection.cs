@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -24,4 +24,4 @@ namespace Slack_Recorder.DAL
             this.Connection.Open();
         }
     }
-}
+}*/

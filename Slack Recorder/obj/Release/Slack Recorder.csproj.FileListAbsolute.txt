@@ -11,3 +11,12 @@ D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Re
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.exe
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.pdb
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\obj\Release\Slack Recorder.csprojAssemblyReference.cache
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\EntityFramework.dll
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\EntityFramework.SqlServer.dll
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\System.Data.SQLite.dll
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\System.Data.SQLite.EF6.dll
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\System.Data.SQLite.Linq.dll
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\EntityFramework.xml
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\EntityFramework.SqlServer.xml
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\System.Data.SQLite.xml
+D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\System.Data.SQLite.dll.config

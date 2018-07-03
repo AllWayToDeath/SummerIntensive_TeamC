@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Slack_Recorder.Models;
 using System.Threading;
 using System.Diagnostics;
-using Microsoft.Win32;
 using System.Management;
-using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
 using System.IO;
+using System.Data.SQLite;
+using System.Data;
+
+using Microsoft.Win32;
+using Slack_Recorder.Models;
+using NAudio.Wave;
 
 namespace Slack_Recorder
 {
@@ -23,7 +18,6 @@ namespace Slack_Recorder
         bool isExpanded = false;
         public static int counter = 0;
 
-        Repository _rep;
         FolderBrowserDialog saveDirectory = new FolderBrowserDialog();
 
         ManagementEventWatcher startWatch;
@@ -39,15 +33,20 @@ namespace Slack_Recorder
         WaveFileWriter RecordedAudioWriter;
         string playbackRecordFileName = "Record_from_speakers.wav";
 
+        private String dbFileName;
+        private SQLiteConnection m_dbConn;
+        private SQLiteCommand m_sqlCmd;
+
         public Form1()
         {
-            _rep = new Repository();
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ReadRecords();
+            ConnectToDatabase();
+            ReadFromDatabase();
+
             saveDirectory.SelectedPath = saveDirectoryTextBox.Text;
 
             startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace WHERE ProcessName = \"Slack.exe\""));
@@ -59,7 +58,7 @@ namespace Slack_Recorder
             stopWatch.Start();
         }
 
-        void stopWatch_EventArrived(object sender, EventArrivedEventArgs e)
+        private void stopWatch_EventArrived(object sender, EventArrivedEventArgs e)
         {
             Process[] proc = Process.GetProcessesByName("Slack");
             if (proc.Length < 8)
@@ -75,48 +74,65 @@ namespace Slack_Recorder
                         waveIn.StopRecording();
                         this.CaptureInstance.StopRecording();
 
-                        MixingSampleProvider mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 2));
+                        MixTwoSamples();
 
-                        MessageBox.Show("DELETE ME"); //ПАНИКА -> АПАТИЯ -> СМИРЕНИЕ
-                        AudioFileReader MicFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
-                        AudioFileReader SpeakerFilereader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playbackRecordFileName);
+                        ConvertToMp3();
 
-                        mixer.AddMixerInput((ISampleProvider)MicFileReader);
-                        mixer.AddMixerInput((ISampleProvider)SpeakerFilereader);
+                        DeleteTempFiles();
 
-                        var waveProvider = mixer.ToWaveProvider();
-
-                        WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", waveProvider);
-
-                        ProcessStartInfo psi = new ProcessStartInfo();
-
-                        psi.FileName = "lame.exe";
-                        psi.Arguments = "-V2 " + saveDirectory.SelectedPath + @"\" + "result.wav " + saveDirectory.SelectedPath + @"\" + DateTime.Now.ToString("dd.MM.yyyy_HH.mm") + ".mp3";
-                        psi.WindowStyle = ProcessWindowStyle.Hidden;
-
-                        Process p = Process.Start(psi);
-
-                        p.WaitForExit();
-
-                        MicFileReader.Dispose();
-                        SpeakerFilereader.Dispose();
-
-
-                        Record record = new Record();
-                        record.Date = DateTime.Now.ToString("dd.MM.yyyy");
-                        record.Time = DateTime.Now.ToString("HH.mm");
-
-                        _rep.Insert(record);
-                        ReadRecords();
+                        InsertIntoDatabase(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH.mm"));
+                        ReadFromDatabase();
                     }
                     counter = 0;
-                    
                 }
                 counter++;
             }
         }
 
-        void startWatch_EventArrived(object sender, EventArrivedEventArgs e)
+        private void DeleteTempFiles()
+        {
+            File.Delete(saveDirectory.SelectedPath + "\\" + "result.wav");
+            File.Delete(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
+            File.Delete(saveDirectory.SelectedPath + "\\" + playbackRecordFileName);
+        }
+
+        private void ConvertToMp3()
+        {
+            ProcessStartInfo psi = new ProcessStartInfo();
+
+            psi.FileName = "lame.exe";
+            psi.Arguments = "-V2 " + saveDirectory.SelectedPath + "\\" + "result.wav " + saveDirectory.SelectedPath + "\\" + DateTime.Now.ToString("dd.MM.yyyy_HH.mm") + ".mp3";
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+
+            Process p = Process.Start(psi);
+
+            p.WaitForExit();
+        }
+
+        private void MixTwoSamples()
+        {
+            while (writer == null && RecordedAudioWriter == null)
+            {
+
+            }
+
+            //MessageBox.Show("DELETE ME"); //ПАНИКА -> АПАТИЯ -> СМИРЕНИЕ
+
+            Thread.Sleep(1000);
+
+            using (var MicFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName))
+            using (var SpeakerFilereader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playbackRecordFileName))
+            {
+                WaveMixerStream32 mixer = new WaveMixerStream32();
+
+                mixer.AddInputStream(MicFileReader);
+                mixer.AddInputStream(SpeakerFilereader);
+
+                WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", mixer);
+            }
+        }
+
+        private void startWatch_EventArrived(object sender, EventArrivedEventArgs e)
         {
             Process[] proc = Process.GetProcessesByName("Slack");
             if (proc.Length >= 8)
@@ -147,8 +163,12 @@ namespace Slack_Recorder
 
                         this.CaptureInstance.RecordingStopped += (s, a) =>
                         {
-                            this.RecordedAudioWriter.Dispose();  //здесь может быть баг
-                            this.RecordedAudioWriter = null;
+                            if (this.RecordedAudioWriter != null)
+                            {
+                                this.RecordedAudioWriter.Dispose();  //здесь может быть баг
+                                this.RecordedAudioWriter = null;
+                            }
+                           
                             CaptureInstance.Dispose();
                         };
 
@@ -170,7 +190,7 @@ namespace Slack_Recorder
             }
         }
 
-        void waveIn_DataAvailable(object sender, WaveInEventArgs e)
+        private void waveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             if (this.InvokeRequired)
             {
@@ -182,7 +202,7 @@ namespace Slack_Recorder
             }
         }
 
-        void waveIn_RecordingStopped(object sender, EventArgs e)
+        private void waveIn_RecordingStopped(object sender, EventArgs e)
         {
             if (this.InvokeRequired)
             {
@@ -198,13 +218,75 @@ namespace Slack_Recorder
             }
         }
 
-        private void ReadRecords()
+        private void ConnectToDatabase()
+        {
+            m_dbConn = new SQLiteConnection();
+            m_sqlCmd = new SQLiteCommand();
+
+            dbFileName = "CallsDatabase.sqlite";
+
+            if (!File.Exists(dbFileName))
+                SQLiteConnection.CreateFile(dbFileName);
+
+            m_dbConn = new SQLiteConnection("Data Source=" + dbFileName + ";Version=3;");
+            m_dbConn.Open();
+            m_sqlCmd.Connection = m_dbConn;
+
+            m_sqlCmd.CommandText = "CREATE TABLE IF NOT EXISTS Calls (Id INTEGER PRIMARY KEY AUTOINCREMENT, Date TEXT, Time TEXT)";
+            m_sqlCmd.ExecuteNonQuery();
+        }
+
+        private void ReadFromDatabase()
+        {
+            DataTable dTable = new DataTable();
+            String sqlQuery;
+
+            sqlQuery = "SELECT * FROM Calls";
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(sqlQuery, m_dbConn);
+            adapter.Fill(dTable);
+
+            if (dTable.Rows.Count > 0)
+            {
+                dataGridView.Rows.Clear();
+
+                for (int i = 0; i < dTable.Rows.Count; i++)
+                    dataGridView.Rows.Add(dTable.Rows[i].ItemArray);
+            }
+        }
+
+        private void InsertIntoDatabase(string Date, string Time)
+        {
+            m_sqlCmd.CommandText = "INSERT INTO Calls ('Date', 'Time') values ('" + Date + "' , '" + Time + "')";
+            m_sqlCmd.ExecuteNonQuery();
+        }
+
+        private void DeleteFromDatabase()
+        {
+            Record record = new Record();
+            record.Id = Convert.ToInt16(dataGridView.CurrentRow.Cells[0].Value);
+            record.Date = dataGridView.CurrentRow.Cells[1].Value.ToString();
+            record.Time = dataGridView.CurrentRow.Cells[2].Value.ToString();
+
+            if (!record.Id.HasValue)
+            {
+                MessageBox.Show("Select a row first");
+            }
+            else
+            {
+                m_sqlCmd.CommandText = "DELETE FROM Calls WHERE Id = @Id";
+                m_sqlCmd.Parameters.AddWithValue("@Id", record.Id);
+                m_sqlCmd.ExecuteNonQuery();
+                File.Delete(saveDirectory.SelectedPath + "\\" + record.Date + "_" + record.Time + ".mp3");
+            }
+        }
+
+        /*private void ReadRecords()
         {
             List<Record> clients = _rep.GetRecords();
            
             BindingList<Record> bindingList = new BindingList<Record>(clients);
             this.dataGridView.DataSource = new BindingSource(bindingList, null);
-        }
+        }*/
 
         private void browseButton_Click(object sender, EventArgs e)
         {
@@ -290,31 +372,10 @@ namespace Slack_Recorder
             }
         }
 
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Record record = new Record();
-            record.Date = DateTime.Now.ToString("dd.MM.yyyy");
-            record.Time = DateTime.Now.ToString("HH.mm");
-
-            _rep.Insert(record);
-
-            ReadRecords();
-        }
-
         private void deleteSelectedButton_Click(object sender, EventArgs e)
         {
-            Record record = (Record)dataGridView.CurrentRow.DataBoundItem;
-            if (!record.Id.HasValue)
-            {
-                MessageBox.Show("Select a row first");
-            }
-            else
-            {
-                _rep.Delete(record);
-                ReadRecords();
-                File.Delete(saveDirectory.SelectedPath + "\\" + record.Date + "_" + record.Time + ".mp3");
-            }
+            DeleteFromDatabase();
+            ReadFromDatabase();
         }
 
         private void openRecordButton_Click(object sender, EventArgs e)
@@ -326,7 +387,13 @@ namespace Slack_Recorder
 
         private void helpButton_Click(object sender, EventArgs e)
         {
+            Process.Start("NewProject.chm");
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            InsertIntoDatabase(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH.mm"));
+            ReadFromDatabase();
         }
     }
 }
