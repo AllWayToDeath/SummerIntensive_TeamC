@@ -79,7 +79,7 @@ namespace Slack_Recorder
 
                         ConvertToMp3();
 
-                        InsertIntoDatabase(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH.mm"));
+                        InsertIntoDatabase(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH.mm.ss"));
 
                         DeleteTempFiles();
 
@@ -103,7 +103,7 @@ namespace Slack_Recorder
             ProcessStartInfo psi = new ProcessStartInfo();
 
             psi.FileName = "lame.exe";
-            psi.Arguments = "-V2 " + saveDirectory.SelectedPath + "\\" + "result.wav " + saveDirectory.SelectedPath + "\\" + DateTime.Now.ToString("dd.MM.yyyy_HH.mm") + ".mp3";
+            psi.Arguments = "-V2 " + saveDirectory.SelectedPath + "\\" + "result.wav " + saveDirectory.SelectedPath + "\\" + DateTime.Now.ToString("dd.MM.yyyy_HH.mm.ss") + ".mp3";
             psi.WindowStyle = ProcessWindowStyle.Hidden;
 
             Process p = Process.Start(psi);
@@ -179,9 +179,6 @@ namespace Slack_Recorder
                             {
                                 RecordedAudioWriter.Dispose();  //здесь может быть баг
                                 RecordedAudioWriter = null;
-
-                                //this.CaptureInstance.Dispose();
-                                //this.CaptureInstance = null;
                             }
                            
                             CaptureInstance.Dispose();
@@ -269,13 +266,17 @@ namespace Slack_Recorder
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(sqlQuery, m_dbConn);
             adapter.Fill(dTable);
 
-            if (dTable.Rows.Count > 0)
-            {
-                dataGridView.Rows.Clear();
+            dataGridView.Rows.Clear();
 
-                for (int i = 0; i < dTable.Rows.Count; i++)
-                    dataGridView.Rows.Add(dTable.Rows[i].ItemArray);
+            for (int i = 0; i < dTable.Rows.Count; i++)
+            {
+                dataGridView.Rows.Add(dTable.Rows[i].ItemArray);
             }
+                
+            /*if (dTable.Rows.Count > 0)
+            {
+                
+            }*/
         }
 
         private void InsertIntoDatabase(string Date, string Time)

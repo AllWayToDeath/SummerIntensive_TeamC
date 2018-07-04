@@ -1,6 +1,0 @@
-﻿CREATE TABLE [dbo].[Table]
-(
-	[Id] INT NOT NULL PRIMARY KEY, 
-    [Date] NVARCHAR(10) NOT NULL, 
-    [Time] NCHAR(4) NOT NULL
-)
