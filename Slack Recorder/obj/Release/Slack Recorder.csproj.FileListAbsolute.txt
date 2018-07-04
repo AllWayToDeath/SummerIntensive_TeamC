@@ -20,3 +20,25 @@ D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\EntityFr
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\EntityFramework.SqlServer.xml
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\System.Data.SQLite.xml
 D:\Programming\Slack_Recorder\Slack Recorder\Slack Recorder\bin\Release\System.Data.SQLite.dll.config
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\Slack Recorder.exe.config
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\Slack Recorder.exe
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\Slack Recorder.pdb
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\EntityFramework.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\EntityFramework.SqlServer.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\NAudio.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\System.Data.SQLite.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\System.Data.SQLite.EF6.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\System.Data.SQLite.Linq.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\EntityFramework.xml
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\EntityFramework.SqlServer.xml
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\NAudio.xml
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\System.Data.SQLite.xml
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\System.Data.SQLite.dll.config
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack Recorder.csprojAssemblyReference.cache
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack_Recorder.Form1.resources
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack_Recorder.Properties.Resources.resources
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack Recorder.csproj.GenerateResource.cache
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack Recorder.csproj.CoreCompileInputs.cache
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack Recorder.csproj.CopyComplete
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack Recorder.exe
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack Recorder.pdb

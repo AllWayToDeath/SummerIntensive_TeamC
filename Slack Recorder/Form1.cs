@@ -10,6 +10,7 @@ using System.Data;
 using Microsoft.Win32;
 using Slack_Recorder.Models;
 using NAudio.Wave;
+using System.Linq;
 
 namespace Slack_Recorder
 {
@@ -26,12 +27,12 @@ namespace Slack_Recorder
         //recorder and writer for mic
         WaveInEvent waveIn;
         WaveFileWriter writer;
-        string micRecordFIleName = "Record_from_mic.wav";
+        string micRecordFIleName;
 
         //recorder and writer for speaker
         WasapiLoopbackCapture CaptureInstance;
         WaveFileWriter RecordedAudioWriter;
-        string playbackRecordFileName = "Record_from_speakers.wav";
+        string playBackRecordFileName;
 
         private String dbFileName;
         private SQLiteConnection m_dbConn;
@@ -72,15 +73,16 @@ namespace Slack_Recorder
                     if (waveIn != null)
                     {
                         waveIn.StopRecording();
-                        this.CaptureInstance.StopRecording();
+                        CaptureInstance.StopRecording();
 
                         MixTwoSamples();
 
                         ConvertToMp3();
 
+                        InsertIntoDatabase(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH.mm"));
+
                         DeleteTempFiles();
 
-                        InsertIntoDatabase(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH.mm"));
                         ReadFromDatabase();
                     }
                     counter = 0;
@@ -93,7 +95,7 @@ namespace Slack_Recorder
         {
             File.Delete(saveDirectory.SelectedPath + "\\" + "result.wav");
             File.Delete(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
-            File.Delete(saveDirectory.SelectedPath + "\\" + playbackRecordFileName);
+            File.Delete(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
         }
 
         private void ConvertToMp3()
@@ -116,20 +118,26 @@ namespace Slack_Recorder
 
             }
 
-            //MessageBox.Show("DELETE ME"); //ПАНИКА -> АПАТИЯ -> СМИРЕНИЕ
-
             Thread.Sleep(1000);
 
-            using (var MicFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName))
-            using (var SpeakerFilereader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playbackRecordFileName))
-            {
-                WaveMixerStream32 mixer = new WaveMixerStream32();
+            AudioFileReader MicFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
+            AudioFileReader SpeakerFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
 
-                mixer.AddInputStream(MicFileReader);
-                mixer.AddInputStream(SpeakerFilereader);
+            WaveMixerStream32 mixer = new WaveMixerStream32();
 
-                WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", mixer);
-            }
+            mixer.AddInputStream(MicFileReader);
+            mixer.AddInputStream(SpeakerFileReader);
+
+            WaveFileWriter.CreateWaveFile(saveDirectory.SelectedPath + "\\" + "result.wav", mixer);
+
+            MicFileReader.Close();
+            MicFileReader.Dispose();
+            MicFileReader = null;
+
+            SpeakerFileReader.Close();
+            SpeakerFileReader.Dispose();
+            SpeakerFileReader = null;
+            
         }
 
         private void startWatch_EventArrived(object sender, EventArrivedEventArgs e)
@@ -141,6 +149,8 @@ namespace Slack_Recorder
                 {
                     try
                     {
+                        playBackRecordFileName = RandomStringGeneration(10) + ".wav";
+                        micRecordFIleName = RandomStringGeneration(10) + ".wav";
                         waveIn = new WaveInEvent();
 
                         waveIn.DeviceNumber = 0;
@@ -153,23 +163,29 @@ namespace Slack_Recorder
 
                         waveIn.StartRecording();
 
-                        this.CaptureInstance = new WasapiLoopbackCapture();
-                        this.RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playbackRecordFileName, CaptureInstance.WaveFormat);
 
-                        this.CaptureInstance.DataAvailable += (s, a) =>
+
+                        CaptureInstance = new WasapiLoopbackCapture();
+                        RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playBackRecordFileName, CaptureInstance.WaveFormat);
+
+                        CaptureInstance.DataAvailable += (s, a) =>
                         {
-                            this.RecordedAudioWriter.Write(a.Buffer, 0, a.BytesRecorded);
+                            RecordedAudioWriter.Write(a.Buffer, 0, a.BytesRecorded);
                         };
 
-                        this.CaptureInstance.RecordingStopped += (s, a) =>
+                        CaptureInstance.RecordingStopped += (s, a) =>
                         {
-                            if (this.RecordedAudioWriter != null)
+                            if (RecordedAudioWriter != null)
                             {
-                                this.RecordedAudioWriter.Dispose();  //здесь может быть баг
-                                this.RecordedAudioWriter = null;
+                                RecordedAudioWriter.Dispose();  //здесь может быть баг
+                                RecordedAudioWriter = null;
+
+                                //this.CaptureInstance.Dispose();
+                                //this.CaptureInstance = null;
                             }
                            
                             CaptureInstance.Dispose();
+                            CaptureInstance = null;
                         };
 
                         this.CaptureInstance.StartRecording();
@@ -188,6 +204,14 @@ namespace Slack_Recorder
                 }
                 counter++;
             }
+        }
+
+        private static Random random = new Random();
+
+        private string RandomStringGeneration(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         private void waveIn_DataAvailable(object sender, WaveInEventArgs e)
