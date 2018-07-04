@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using Slack_Recorder.Models;
 using NAudio.Wave;
 using NAudio.Lame;
+using System.Linq;
 
 namespace Slack_Recorder
 {
@@ -26,14 +27,14 @@ namespace Slack_Recorder
         ManagementEventWatcher stopWatch;
 
         //recorder and writer for mic
-        WaveInEvent waveIn;
-        WaveFileWriter writer;
-        string micRecordFIleName = "record_from_mic.wav";
+        WaveInEvent waveIn = null;
+        WaveFileWriter writer = null;
+        string micRecordFIleName;
 
         //recorder and writer for speaker
-        WasapiLoopbackCapture CaptureInstance;
-        WaveFileWriter RecordedAudioWriter;
-        string playBackRecordFileName = "record_from_speaker.wav";
+        WasapiLoopbackCapture CaptureInstance = null;
+        WaveFileWriter RecordedAudioWriter = null;
+        string playBackRecordFileName;
 
         private String dbFileName;
         private SQLiteConnection m_dbConn;
@@ -41,6 +42,9 @@ namespace Slack_Recorder
 
         private string saveDate;
         private string saveTime;
+
+        AudioFileReader MicFileReader = null;
+        AudioFileReader SpeakerFileReader = null;
 
         public Form1()
         {
@@ -76,19 +80,28 @@ namespace Slack_Recorder
 
                     if (waveIn != null)
                     {
-                        waveIn.StopRecording();
-                        CaptureInstance.StopRecording();
+                        try
+                        {
+                            waveIn.StopRecording();
+                            CaptureInstance.StopRecording();
 
-                        saveDate = DateTime.Now.ToString("dd.MM.yyyy");
-                        saveTime = DateTime.Now.ToString("HH.mm.ss");
+                            saveDate = DateTime.Now.ToString("dd.MM.yyyy");
+                            saveTime = DateTime.Now.ToString("HH.mm.ss");
 
-                        MixTwoSamples();
+                            MixTwoSamples();
 
-                        ConvertToMP3(saveDirectory.SelectedPath + "\\" + "result.wav", saveDirectory.SelectedPath + "\\" + saveDate + "_" + saveTime + ".mp3", 128);
+                            ConvertToMP3(saveDirectory.SelectedPath + "\\" + "result.wav", saveDirectory.SelectedPath + "\\" + saveDate + "_" + saveTime + ".mp3", 128);
 
-                        DeleteTempFiles();
+                            DeleteTempFiles();
 
-                        InsertIntoDatabase(saveDate, saveTime, saveDirectory.SelectedPath);
+                            InsertIntoDatabase(saveDate, saveTime, saveDirectory.SelectedPath);
+                        }
+                        catch (NullReferenceException ex)
+                        {
+                            waveIn.StopRecording();
+                            CaptureInstance.StopRecording();
+                        }
+                        
                     }
                     counter = 0;
                 }
@@ -99,8 +112,8 @@ namespace Slack_Recorder
         private void DeleteTempFiles()
         {
             File.Delete(saveDirectory.SelectedPath + "\\" + "result.wav");
-            File.Delete(saveDirectory.SelectedPath + "\\" + "record_from_speaker.wav");
-            File.Delete(saveDirectory.SelectedPath + "\\" + "record_from_mic.wav");
+            File.Delete(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
+            File.Delete(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
         }
 
         void ConvertToMP3(string waveFileName, string mp3FileName, int bitRate = 128)
@@ -119,8 +132,8 @@ namespace Slack_Recorder
 
             Thread.Sleep(1000);
 
-            AudioFileReader MicFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
-            AudioFileReader SpeakerFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
+            MicFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
+            SpeakerFileReader = new AudioFileReader(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
 
             WaveMixerStream32 mixer = new WaveMixerStream32();
 
@@ -147,6 +160,25 @@ namespace Slack_Recorder
                 {
                     try
                     {
+                        if (MicFileReader != null && SpeakerFileReader != null)
+                        {
+                            MicFileReader.Close();
+                            MicFileReader.Dispose();
+                            MicFileReader = null;
+
+                            SpeakerFileReader.Close();
+                            SpeakerFileReader.Dispose();
+                            SpeakerFileReader = null;
+                        }
+
+                        micRecordFIleName = RandomString(15) + ".wav";
+                        playBackRecordFileName = RandomString(15) + ".wav";
+
+                        if (waveIn != null)
+                        {
+                            waveIn.StopRecording();
+                        }
+
                         waveIn = new WaveInEvent();
 
                         waveIn.DeviceNumber = 0;
@@ -155,15 +187,41 @@ namespace Slack_Recorder
                         waveIn.DataAvailable += waveIn_DataAvailable;
                         waveIn.RecordingStopped += waveIn_RecordingStopped;
 
-                        writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
+                        try
+                        {
+                            writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
+                        }
+                        catch (Exception ex)
+                        {
+                            writer.Close();
+                            writer.Dispose();
+                            writer = null;
+
+                            writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
+                        }
 
                         waveIn.StartRecording();
 
-
+                        if (CaptureInstance != null)
+                        {
+                            CaptureInstance.StopRecording();
+                        }
 
                         CaptureInstance = new WasapiLoopbackCapture();
-                        RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playBackRecordFileName, CaptureInstance.WaveFormat);
+                        
+                        try
+                        {
+                            RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playBackRecordFileName, CaptureInstance.WaveFormat);
+                        }
+                        catch (Exception ex)
+                        {
+                            RecordedAudioWriter.Close();
+                            RecordedAudioWriter.Dispose();
+                            RecordedAudioWriter = null;
 
+                            RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playBackRecordFileName, CaptureInstance.WaveFormat);
+                        }    
+                    
                         CaptureInstance.DataAvailable += (s, a) =>
                         {
                             RecordedAudioWriter.Write(a.Buffer, 0, a.BytesRecorded);
@@ -171,6 +229,7 @@ namespace Slack_Recorder
 
                         CaptureInstance.RecordingStopped += (s, a) =>
                         {
+                            
                             if (RecordedAudioWriter != null)
                             {
                                 try
@@ -184,12 +243,15 @@ namespace Slack_Recorder
                                     File.Delete(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
                                 }
                             }
-                           
-                            CaptureInstance.Dispose();
-                            CaptureInstance = null;
+
+                            if (CaptureInstance != null)
+                            {
+                                CaptureInstance.Dispose();
+                                CaptureInstance = null;
+                            }
                         };
 
-                        this.CaptureInstance.StartRecording();
+                        CaptureInstance.StartRecording();
                     }
 
                     catch (Exception ex)
@@ -208,6 +270,13 @@ namespace Slack_Recorder
         }
 
         private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
 
         private void waveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
@@ -275,9 +344,6 @@ namespace Slack_Recorder
         {
             m_sqlCmd.CommandText = "INSERT INTO Calls ('Date', 'Time', 'Path') values ('" + Date + "' , '" + Time + "' , '" + Path + "')";
             m_sqlCmd.ExecuteNonQuery();
-            //MessageBox.Show("1");
-            //button1.PerformClick();
-            //MessageBox.Show("2");
         }
 
         private void DeleteFromDatabase()
@@ -321,7 +387,7 @@ namespace Slack_Recorder
             if (!isExpanded)
             {
                 ReadFromDatabase();
-                for (int i = 0; i < 65; i++)
+                for (int i = 0; i < 86; i++)
                 {
                     this.Width += 5;
                     Thread.Sleep(5);
@@ -331,7 +397,7 @@ namespace Slack_Recorder
 
             else
             {
-                for (int i = 0; i < 65; i++)
+                for (int i = 0; i < 86; i++)
                 {
                     this.Width -= 5;
                     Thread.Sleep(5);
@@ -414,6 +480,21 @@ namespace Slack_Recorder
         private void button1_Click(object sender, EventArgs e)
         {
             ReadFromDatabase();
+        }
+
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count != 0)
+            {
+                openRecordButton.Size = new System.Drawing.Size(148, 23);
+                deleteSelectedButton.Size = new System.Drawing.Size(151, 23);
+            }
+
+            else
+            {
+                openRecordButton.Size = new System.Drawing.Size(117, 23);
+                deleteSelectedButton.Size = new System.Drawing.Size(122, 23);
+            }
         }
     }
 }

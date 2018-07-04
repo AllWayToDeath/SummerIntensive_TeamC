@@ -45,9 +45,9 @@
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.helpButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -135,7 +135,7 @@
             // 
             // deleteSelectedButton
             // 
-            this.deleteSelectedButton.Location = new System.Drawing.Point(474, 133);
+            this.deleteSelectedButton.Location = new System.Drawing.Point(505, 133);
             this.deleteSelectedButton.Name = "deleteSelectedButton";
             this.deleteSelectedButton.Size = new System.Drawing.Size(122, 23);
             this.deleteSelectedButton.TabIndex = 14;
@@ -173,8 +173,9 @@
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(305, 105);
+            this.dataGridView.Size = new System.Drawing.Size(403, 105);
             this.dataGridView.TabIndex = 0;
+            this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             // 
             // Id
             // 
@@ -194,6 +195,12 @@
             this.Time.Name = "Time";
             this.Time.ReadOnly = true;
             // 
+            // Path
+            // 
+            this.Path.HeaderText = "Path";
+            this.Path.Name = "Path";
+            this.Path.ReadOnly = true;
+            // 
             // helpButton
             // 
             this.helpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -207,25 +214,19 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(602, 133);
+            this.button1.Location = new System.Drawing.Point(662, 133);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(54, 23);
+            this.button1.Size = new System.Drawing.Size(92, 23);
             this.button1.TabIndex = 16;
-            this.button1.Text = "Refresh";
+            this.button1.Text = "Refresh table";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // Path
-            // 
-            this.Path.HeaderText = "Path";
-            this.Path.Name = "Path";
-            this.Path.ReadOnly = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(339, 161);
+            this.ClientSize = new System.Drawing.Size(337, 161);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.helpButton);
             this.Controls.Add(this.deleteSelectedButton);
