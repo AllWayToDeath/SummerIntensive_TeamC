@@ -47,6 +47,7 @@
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.helpButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             // 
             // browseButton
             // 
-            this.browseButton.Location = new System.Drawing.Point(248, 43);
+            this.browseButton.Location = new System.Drawing.Point(250, 43);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(75, 23);
             this.browseButton.TabIndex = 7;
@@ -91,7 +92,7 @@
             // openGridButton
             // 
             this.openGridButton.Image = ((System.Drawing.Image)(resources.GetObject("openGridButton.Image")));
-            this.openGridButton.Location = new System.Drawing.Point(248, 78);
+            this.openGridButton.Location = new System.Drawing.Point(250, 78);
             this.openGridButton.Name = "openGridButton";
             this.openGridButton.Size = new System.Drawing.Size(75, 73);
             this.openGridButton.TabIndex = 8;
@@ -126,7 +127,7 @@
             // 
             this.openRecordButton.Location = new System.Drawing.Point(351, 133);
             this.openRecordButton.Name = "openRecordButton";
-            this.openRecordButton.Size = new System.Drawing.Size(129, 23);
+            this.openRecordButton.Size = new System.Drawing.Size(117, 23);
             this.openRecordButton.TabIndex = 11;
             this.openRecordButton.Text = "Open selected record";
             this.openRecordButton.UseVisualStyleBackColor = true;
@@ -134,9 +135,9 @@
             // 
             // deleteSelectedButton
             // 
-            this.deleteSelectedButton.Location = new System.Drawing.Point(506, 133);
+            this.deleteSelectedButton.Location = new System.Drawing.Point(474, 133);
             this.deleteSelectedButton.Name = "deleteSelectedButton";
-            this.deleteSelectedButton.Size = new System.Drawing.Size(142, 23);
+            this.deleteSelectedButton.Size = new System.Drawing.Size(122, 23);
             this.deleteSelectedButton.TabIndex = 14;
             this.deleteSelectedButton.Text = "Delete selected record";
             this.deleteSelectedButton.UseVisualStyleBackColor = true;
@@ -163,7 +164,8 @@
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
             this.Date,
-            this.Time});
+            this.Time,
+            this.Path});
             this.dataGridView.Location = new System.Drawing.Point(351, 12);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
@@ -171,7 +173,7 @@
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(297, 105);
+            this.dataGridView.Size = new System.Drawing.Size(305, 105);
             this.dataGridView.TabIndex = 0;
             // 
             // Id
@@ -196,7 +198,7 @@
             // 
             this.helpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.helpButton.Image = ((System.Drawing.Image)(resources.GetObject("helpButton.Image")));
-            this.helpButton.Location = new System.Drawing.Point(302, 12);
+            this.helpButton.Location = new System.Drawing.Point(304, 12);
             this.helpButton.Name = "helpButton";
             this.helpButton.Size = new System.Drawing.Size(21, 23);
             this.helpButton.TabIndex = 15;
@@ -205,19 +207,25 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(654, 12);
+            this.button1.Location = new System.Drawing.Point(602, 133);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(54, 23);
             this.button1.TabIndex = 16;
-            this.button1.Text = "button1";
+            this.button1.Text = "Refresh";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Path
+            // 
+            this.Path.HeaderText = "Path";
+            this.Path.Name = "Path";
+            this.Path.ReadOnly = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 161);
+            this.ClientSize = new System.Drawing.Size(339, 161);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.helpButton);
             this.Controls.Add(this.deleteSelectedButton);
@@ -259,6 +267,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Path;
     }
 }
 

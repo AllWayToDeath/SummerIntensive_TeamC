@@ -42,3 +42,6 @@ D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csp
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csproj.CopyComplete
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.exe
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.pdb
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Debug\libmp3lame.32.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Debug\libmp3lame.64.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Debug\NAudio.Lame.dll

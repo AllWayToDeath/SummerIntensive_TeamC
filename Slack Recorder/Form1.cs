@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Management;
 using System.IO;
@@ -10,7 +11,7 @@ using System.Data;
 using Microsoft.Win32;
 using Slack_Recorder.Models;
 using NAudio.Wave;
-using System.Linq;
+using NAudio.Lame;
 
 namespace Slack_Recorder
 {
@@ -27,18 +28,19 @@ namespace Slack_Recorder
         //recorder and writer for mic
         WaveInEvent waveIn;
         WaveFileWriter writer;
-        string micRecordFIleName;
+        string micRecordFIleName = "record_from_mic.wav";
 
         //recorder and writer for speaker
         WasapiLoopbackCapture CaptureInstance;
         WaveFileWriter RecordedAudioWriter;
-        string playBackRecordFileName;
+        string playBackRecordFileName = "record_from_speaker.wav";
 
         private String dbFileName;
         private SQLiteConnection m_dbConn;
         private SQLiteCommand m_sqlCmd;
 
-        private string saveDateTime;
+        private string saveDate;
+        private string saveTime;
 
         public Form1()
         {
@@ -77,17 +79,16 @@ namespace Slack_Recorder
                         waveIn.StopRecording();
                         CaptureInstance.StopRecording();
 
+                        saveDate = DateTime.Now.ToString("dd.MM.yyyy");
+                        saveTime = DateTime.Now.ToString("HH.mm.ss");
+
                         MixTwoSamples();
 
-                        ConvertToMp3();
-
-                        InsertIntoDatabase(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH.mm.ss"));
-
-                        //saveDateTime = DateTime.Now.ToString("dd.MM.yyyy_HH.mm.ss");
+                        ConvertToMP3(saveDirectory.SelectedPath + "\\" + "result.wav", saveDirectory.SelectedPath + "\\" + saveDate + "_" + saveTime + ".mp3", 128);
 
                         DeleteTempFiles();
 
-                        ReadFromDatabase();
+                        InsertIntoDatabase(saveDate, saveTime, saveDirectory.SelectedPath);
                     }
                     counter = 0;
                 }
@@ -98,21 +99,15 @@ namespace Slack_Recorder
         private void DeleteTempFiles()
         {
             File.Delete(saveDirectory.SelectedPath + "\\" + "result.wav");
-            File.Delete(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
-            File.Delete(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
+            File.Delete(saveDirectory.SelectedPath + "\\" + "record_from_speaker.wav");
+            File.Delete(saveDirectory.SelectedPath + "\\" + "record_from_mic.wav");
         }
 
-        private void ConvertToMp3()
+        void ConvertToMP3(string waveFileName, string mp3FileName, int bitRate = 128)
         {
-            ProcessStartInfo psi = new ProcessStartInfo();
-
-            psi.FileName = "lame.exe";
-            psi.Arguments = "-V2 " + saveDirectory.SelectedPath + "\\" + "result.wav " + saveDirectory.SelectedPath + "\\" + DateTime.Now.ToString("dd.MM.yyyy_HH.mm.ss") + ".mp3";
-            psi.WindowStyle = ProcessWindowStyle.Hidden;
-
-            Process p = Process.Start(psi);
-
-            p.WaitForExit();
+            using (var reader = new AudioFileReader(waveFileName))
+            using (var writer = new LameMP3FileWriter(mp3FileName, reader.WaveFormat, bitRate))
+                reader.CopyTo(writer);
         }
 
         private void MixTwoSamples()
@@ -141,7 +136,6 @@ namespace Slack_Recorder
             SpeakerFileReader.Close();
             SpeakerFileReader.Dispose();
             SpeakerFileReader = null;
-            
         }
 
         private void startWatch_EventArrived(object sender, EventArrivedEventArgs e)
@@ -153,8 +147,6 @@ namespace Slack_Recorder
                 {
                     try
                     {
-                        playBackRecordFileName = RandomStringGeneration(10) + ".wav";
-                        micRecordFIleName = RandomStringGeneration(10) + ".wav";
                         waveIn = new WaveInEvent();
 
                         waveIn.DeviceNumber = 0;
@@ -183,7 +175,7 @@ namespace Slack_Recorder
                             {
                                 try
                                 {
-                                    RecordedAudioWriter.Dispose();  //здесь может быть баг, 
+                                    RecordedAudioWriter.Dispose();  //здесь может быть баг
                                     RecordedAudioWriter = null;
                                 }
                                 catch (Exception ex)
@@ -216,12 +208,6 @@ namespace Slack_Recorder
         }
 
         private static Random random = new Random();
-
-        private string RandomStringGeneration(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
-        }
 
         private void waveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
@@ -265,7 +251,7 @@ namespace Slack_Recorder
             m_dbConn.Open();
             m_sqlCmd.Connection = m_dbConn;
 
-            m_sqlCmd.CommandText = "CREATE TABLE IF NOT EXISTS Calls (Id INTEGER PRIMARY KEY AUTOINCREMENT, Date TEXT, Time TEXT)";
+            m_sqlCmd.CommandText = "CREATE TABLE IF NOT EXISTS Calls (Id INTEGER PRIMARY KEY AUTOINCREMENT, Date TEXT, Time TEXT, Path TEXT)";
             m_sqlCmd.ExecuteNonQuery();
         }
 
@@ -277,7 +263,6 @@ namespace Slack_Recorder
             sqlQuery = "SELECT * FROM Calls";
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(sqlQuery, m_dbConn);
             adapter.Fill(dTable);
-
             dataGridView.Rows.Clear();
 
             for (int i = 0; i < dTable.Rows.Count; i++)
@@ -286,12 +271,13 @@ namespace Slack_Recorder
             }
         }
 
-        private void InsertIntoDatabase(string Date, string Time)
+        private void InsertIntoDatabase(string Date, string Time, string Path)
         {
-            m_sqlCmd.CommandText = "INSERT INTO Calls ('Date', 'Time') values ('" + Date + "' , '" + Time + "')";
+            m_sqlCmd.CommandText = "INSERT INTO Calls ('Date', 'Time', 'Path') values ('" + Date + "' , '" + Time + "' , '" + Path + "')";
             m_sqlCmd.ExecuteNonQuery();
-
-            saveDateTime = Date + "_" + Time;
+            //MessageBox.Show("1");
+            //button1.PerformClick();
+            //MessageBox.Show("2");
         }
 
         private void DeleteFromDatabase()
@@ -415,7 +401,7 @@ namespace Slack_Recorder
 
         private void openRecordButton_Click(object sender, EventArgs e)
         {
-            string selectedFile = saveDirectory.SelectedPath + "\\" + dataGridView.CurrentRow.Cells[1].Value.ToString() + "_" + dataGridView.CurrentRow.Cells[2].Value.ToString() + ".mp3";
+            string selectedFile = dataGridView.CurrentRow.Cells[3].Value.ToString() + "\\" + dataGridView.CurrentRow.Cells[1].Value.ToString() + "_" + dataGridView.CurrentRow.Cells[2].Value.ToString() + ".mp3";
 
             Process.Start("explorer.exe", string.Format("/select,\"{0}\"", selectedFile));
         }
@@ -427,7 +413,6 @@ namespace Slack_Recorder
 
         private void button1_Click(object sender, EventArgs e)
         {
-            InsertIntoDatabase(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH.mm.ss"));
             ReadFromDatabase();
         }
     }
