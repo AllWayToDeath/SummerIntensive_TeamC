@@ -44,3 +44,4 @@ D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack Recorder.p
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\libmp3lame.32.dll
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\libmp3lame.64.dll
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Release\NAudio.Lame.dll
+D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Release\Slack Recorder.csprojAssemblyReference.cache

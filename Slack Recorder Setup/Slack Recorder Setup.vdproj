@@ -203,6 +203,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -617,7 +633,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Slack Recorder"
         "ProductCode" = "8:{352DDA7C-C036-4AD0-8249-BCEFCDA061FD}"
-        "PackageCode" = "8:{1AAF111F-77F0-4C37-87B5-B32A10270D1C}"
+        "PackageCode" = "8:{D59FE438-5FB1-4F4E-AE02-216D73015F0A}"
         "UpgradeCode" = "8:{93F5A590-6B1A-47EF-8E54-DCDF99949B0E}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
