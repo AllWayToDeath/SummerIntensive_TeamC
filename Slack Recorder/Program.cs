@@ -16,7 +16,29 @@ namespace Slack_Recorder
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            /*Application.Run(new Form1());
+            try
+            {
+                
+            }
+            catch (System.Reflection.TargetInvocationException ex)
+            {
+                MessageBox.Show("Can't connect to voice call server");
+            }*/
+            StartApp();
+        }
+
+        static void StartApp()
+        {
+            try
+            {
+                Application.Run(new Form1());
+            }
+            catch (System.Reflection.TargetInvocationException ex)
+            {
+                MessageBox.Show("Can't connect to voice call server.\nPlease, drop current call\nRecorder will be relaunched", "Slack recorder", MessageBoxButtons.OK);
+                StartApp();
+            }
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Management;
 using System.IO;
 using System.Data.SQLite;
 using System.Data;
+using System.Reflection;
+using System.Security.Principal;
 
 using Microsoft.Win32;
 using Slack_Recorder.Models;
@@ -69,44 +70,54 @@ namespace Slack_Recorder
 
         private void stopWatch_EventArrived(object sender, EventArrivedEventArgs e)
         {
-            Process[] proc = Process.GetProcessesByName("Slack");
-            if (proc.Length < 8)
+            try
             {
-                if (counter == 3)
+                Process[] proc = Process.GetProcessesByName("Slack");
+                if (proc.Length < 8)
                 {
-                    notifyIcon1.Visible = true;
-                    notifyIcon1.ShowBalloonTip(1000, "Slack Recorder", "Call recorded", ToolTipIcon.Info);
-                    notifyIcon1.Visible = false;
-
-                    if (waveIn != null)
+                    if (counter == 3)
                     {
-                        try
+                        notifyIcon1.Visible = true;
+                        notifyIcon1.ShowBalloonTip(1000, "Slack Recorder", "Call recorded", ToolTipIcon.Info);
+                        notifyIcon1.Visible = false;
+
+                        if (waveIn != null)
                         {
-                            waveIn.StopRecording();
-                            CaptureInstance.StopRecording();
+                            try
+                            {
+                                waveIn.StopRecording();
+                                CaptureInstance.StopRecording();
 
-                            saveDate = DateTime.Now.ToString("dd.MM.yyyy");
-                            saveTime = DateTime.Now.ToString("HH.mm.ss");
+                                saveDate = DateTime.Now.ToString("dd.MM.yyyy");
+                                saveTime = DateTime.Now.ToString("HH.mm.ss");
 
-                            MixTwoSamples();
+                                MixTwoSamples();
 
-                            ConvertToMP3(saveDirectory.SelectedPath + "\\" + "result.wav", saveDirectory.SelectedPath + "\\" + saveDate + "_" + saveTime + ".mp3", 128);
+                                ConvertToMP3(saveDirectory.SelectedPath + "\\" + "result.wav", saveDirectory.SelectedPath + "\\" + saveDate + "_" + saveTime + ".mp3", 128);
 
-                            DeleteTempFiles();
+                                DeleteTempFiles();
 
-                            InsertIntoDatabase(saveDate, saveTime, saveDirectory.SelectedPath);
+                                InsertIntoDatabase(saveDate, saveTime, saveDirectory.SelectedPath);
+                            }
+                            #pragma warning disable CS0168 // Variable is declared but never used
+                            catch (NullReferenceException ex)
+                            #pragma warning restore CS0168 // Variable is declared but never used
+                            {
+                                waveIn.StopRecording();
+                                CaptureInstance.StopRecording();
+                            }
+
                         }
-                        catch (NullReferenceException ex)
-                        {
-                            waveIn.StopRecording();
-                            CaptureInstance.StopRecording();
-                        }
-                        
+                        counter = 0;
                     }
-                    counter = 0;
+                    counter++;
                 }
-                counter++;
             }
+            catch (NullReferenceException ex)
+            {
+                //MessageBox.Show("Slack call servers are down, please try later");
+            }
+            
         }
 
         private void DeleteTempFiles()
@@ -153,120 +164,136 @@ namespace Slack_Recorder
 
         private void startWatch_EventArrived(object sender, EventArrivedEventArgs e)
         {
-            Process[] proc = Process.GetProcessesByName("Slack");
-            if (proc.Length >= 8)
+            try
             {
-                if (counter == 3)
+                Process[] proc = Process.GetProcessesByName("Slack");
+                if (proc.Length >= 8)
                 {
-                    try
+                    if (counter == 3)
                     {
-                        if (MicFileReader != null && SpeakerFileReader != null)
-                        {
-                            MicFileReader.Close();
-                            MicFileReader.Dispose();
-                            MicFileReader = null;
-
-                            SpeakerFileReader.Close();
-                            SpeakerFileReader.Dispose();
-                            SpeakerFileReader = null;
-                        }
-
-                        micRecordFIleName = RandomString(15) + ".wav";
-                        playBackRecordFileName = RandomString(15) + ".wav";
-
-                        if (waveIn != null)
-                        {
-                            waveIn.StopRecording();
-                        }
-
-                        waveIn = new WaveInEvent();
-
-                        waveIn.DeviceNumber = 0;
-                        waveIn.WaveFormat = new NAudio.Wave.WaveFormat(44100, 32, 2);
-
-                        waveIn.DataAvailable += waveIn_DataAvailable;
-                        waveIn.RecordingStopped += waveIn_RecordingStopped;
-
                         try
                         {
-                            writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
-                        }
-                        catch (Exception ex)
-                        {
-                            writer.Close();
-                            writer.Dispose();
-                            writer = null;
-
-                            writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
-                        }
-
-                        waveIn.StartRecording();
-
-                        if (CaptureInstance != null)
-                        {
-                            CaptureInstance.StopRecording();
-                        }
-
-                        CaptureInstance = new WasapiLoopbackCapture();
-                        
-                        try
-                        {
-                            RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playBackRecordFileName, CaptureInstance.WaveFormat);
-                        }
-                        catch (Exception ex)
-                        {
-                            RecordedAudioWriter.Close();
-                            RecordedAudioWriter.Dispose();
-                            RecordedAudioWriter = null;
-
-                            RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playBackRecordFileName, CaptureInstance.WaveFormat);
-                        }    
-                    
-                        CaptureInstance.DataAvailable += (s, a) =>
-                        {
-                            RecordedAudioWriter.Write(a.Buffer, 0, a.BytesRecorded);
-                        };
-
-                        CaptureInstance.RecordingStopped += (s, a) =>
-                        {
-                            
-                            if (RecordedAudioWriter != null)
+                            if (MicFileReader != null && SpeakerFileReader != null)
                             {
-                                try
-                                {
-                                    RecordedAudioWriter.Dispose();  //здесь может быть баг
-                                    RecordedAudioWriter = null;
-                                }
-                                catch (Exception ex)
-                                {
-                                    File.Delete(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
-                                    File.Delete(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
-                                }
+                                MicFileReader.Close();
+                                MicFileReader.Dispose();
+                                MicFileReader = null;
+
+                                SpeakerFileReader.Close();
+                                SpeakerFileReader.Dispose();
+                                SpeakerFileReader = null;
                             }
+
+                            micRecordFIleName = RandomString(15) + ".wav";
+                            playBackRecordFileName = RandomString(15) + ".wav";
+
+                            if (waveIn != null)
+                            {
+                                waveIn.StopRecording();
+                            }
+
+                            waveIn = new WaveInEvent();
+
+                            waveIn.DeviceNumber = 0;
+                            waveIn.WaveFormat = new NAudio.Wave.WaveFormat(44100, 32, 2);
+
+                            waveIn.DataAvailable += waveIn_DataAvailable;
+                            waveIn.RecordingStopped += waveIn_RecordingStopped;
+
+                            try
+                            {
+                                writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
+                            }
+                            #pragma warning disable CS0168 // Variable is declared but never used
+                            catch (Exception ex)
+                            #pragma warning restore CS0168 // Variable is declared but never used
+                            {
+                                writer.Close();
+                                writer.Dispose();
+                                writer = null;
+
+                                writer = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + micRecordFIleName, waveIn.WaveFormat);
+                            }
+
+                            waveIn.StartRecording();
 
                             if (CaptureInstance != null)
                             {
-                                CaptureInstance.Dispose();
-                                CaptureInstance = null;
+                                CaptureInstance.StopRecording();
                             }
-                        };
 
-                        CaptureInstance.StartRecording();
+                            CaptureInstance = new WasapiLoopbackCapture();
+
+                            try
+                            {
+                                RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playBackRecordFileName, CaptureInstance.WaveFormat);
+                            }
+                            #pragma warning disable CS0168 // Variable is declared but never used
+                            catch (Exception ex)
+                            #pragma warning restore CS0168 // Variable is declared but never used
+                            {
+                                RecordedAudioWriter.Close();
+                                RecordedAudioWriter.Dispose();
+                                RecordedAudioWriter = null;
+
+                                RecordedAudioWriter = new WaveFileWriter(saveDirectory.SelectedPath + "\\" + playBackRecordFileName, CaptureInstance.WaveFormat);
+                            }
+
+                            CaptureInstance.DataAvailable += (s, a) =>
+                            {
+                                RecordedAudioWriter.Write(a.Buffer, 0, a.BytesRecorded);
+                            };
+
+                            CaptureInstance.RecordingStopped += (s, a) =>
+                            {
+
+                                if (RecordedAudioWriter != null)
+                                {
+                                    try
+                                    {
+                                        RecordedAudioWriter.Close();
+                                        RecordedAudioWriter.Dispose();  //здесь может быть баг
+                                        RecordedAudioWriter = null;
+                                    }
+                                    #pragma warning disable CS0168 // Variable is declared but never used
+                                    catch (Exception ex)
+                                    #pragma warning restore CS0168 // Variable is declared but never used
+                                    {
+                                        File.Delete(saveDirectory.SelectedPath + "\\" + micRecordFIleName);
+                                        File.Delete(saveDirectory.SelectedPath + "\\" + playBackRecordFileName);
+                                    }
+                                }
+
+                                if (CaptureInstance != null)
+                                {
+                                    CaptureInstance.StopRecording();
+                                    CaptureInstance.Dispose();
+                                    CaptureInstance = null;
+                                }
+                            };
+
+                            CaptureInstance.StartRecording();
+                        }
+
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                        notifyIcon.Visible = true;
+                        notifyIcon.ShowBalloonTip(1000, "Slack Recorder", "Record started", ToolTipIcon.Info);
+                        notifyIcon.Visible = false;
+
+                        counter = 0;
                     }
-
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-
-                    notifyIcon.Visible = true;
-                    notifyIcon.ShowBalloonTip(1000, "Slack Recorder", "Record started", ToolTipIcon.Info);
-                    notifyIcon.Visible = false;
-
-                    counter = 0;
+                    counter++;
                 }
-                counter++;
             }
+            catch (NullReferenceException)
+            {
+                //MessageBox.Show("Slack call servers are down, please try later");
+            }
+            
         }
 
         private static Random random = new Random();
@@ -298,11 +325,17 @@ namespace Slack_Recorder
             }
             else
             {
-                waveIn.Dispose();
-                waveIn = null;
-
-                writer.Close();
-                writer = null;
+                if (waveIn != null)
+                {
+                    waveIn.Dispose();
+                    waveIn = null;
+                }
+                
+                if (writer != null)
+                {
+                    writer.Close();
+                    writer = null;
+                }
             }
         }
 
@@ -349,20 +382,21 @@ namespace Slack_Recorder
         private void DeleteFromDatabase()
         {
             Record record = new Record();
-            record.Id = Convert.ToInt16(dataGridView.CurrentRow.Cells[0].Value);
-            record.Date = dataGridView.CurrentRow.Cells[1].Value.ToString();
-            record.Time = dataGridView.CurrentRow.Cells[2].Value.ToString();
 
-            if (!record.Id.HasValue)
+            try
             {
-                MessageBox.Show("Select a row first");
-            }
-            else
-            {
+                record.Id = Convert.ToInt16(dataGridView.CurrentRow.Cells[0].Value);
+                record.Date = dataGridView.CurrentRow.Cells[1].Value.ToString();
+                record.Time = dataGridView.CurrentRow.Cells[2].Value.ToString();
+
                 m_sqlCmd.CommandText = "DELETE FROM Calls WHERE Id = @Id";
                 m_sqlCmd.Parameters.AddWithValue("@Id", record.Id);
                 m_sqlCmd.ExecuteNonQuery();
                 File.Delete(saveDirectory.SelectedPath + "\\" + record.Date + "_" + record.Time + ".mp3");
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show("Select a row first");
             }
         }
 
@@ -467,9 +501,16 @@ namespace Slack_Recorder
 
         private void openRecordButton_Click(object sender, EventArgs e)
         {
-            string selectedFile = dataGridView.CurrentRow.Cells[3].Value.ToString() + "\\" + dataGridView.CurrentRow.Cells[1].Value.ToString() + "_" + dataGridView.CurrentRow.Cells[2].Value.ToString() + ".mp3";
+            try
+            {
+                string selectedFile = dataGridView.CurrentRow.Cells[3].Value.ToString() + "\\" + dataGridView.CurrentRow.Cells[1].Value.ToString() + "_" + dataGridView.CurrentRow.Cells[2].Value.ToString() + ".mp3";
 
-            Process.Start("explorer.exe", string.Format("/select,\"{0}\"", selectedFile));
+                Process.Start("explorer.exe", string.Format("/select,\"{0}\"", selectedFile));
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show("Select a row first");
+            }
         }
 
         private void helpButton_Click(object sender, EventArgs e)
@@ -496,5 +537,36 @@ namespace Slack_Recorder
                 deleteSelectedButton.Size = new System.Drawing.Size(122, 23);
             }
         }
+
+        /*private void AdminRelauncher()
+        {
+            if (!IsRunAsAdmin())
+            {
+                ProcessStartInfo proc = new ProcessStartInfo();
+                proc.UseShellExecute = true;
+                proc.WorkingDirectory = Environment.CurrentDirectory;
+                proc.FileName = Assembly.GetEntryAssembly().CodeBase;
+
+                proc.Verb = "runas";
+
+                try
+                {
+                    Process.Start(proc);
+                    Application.Current.Shutdown();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("This program must be run as an administrator! \n\n" + ex.ToString());
+                }
+            }
+        }
+
+        private bool IsRunAsAdmin()
+        {
+            WindowsIdentity id = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(id);
+
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }*/
     }
 }
