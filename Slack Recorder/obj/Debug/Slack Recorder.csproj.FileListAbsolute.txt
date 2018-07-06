@@ -15,7 +15,6 @@ D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Debug\EntityFramework.Sq
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Debug\NAudio.xml
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Debug\System.Data.SQLite.xml
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\bin\Debug\System.Data.SQLite.dll.config
-D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csprojAssemblyReference.cache
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack_Recorder.Form1.resources
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack_Recorder.Properties.Resources.resources
 D:\Programming\SummerIntensive_TeamC\Slack Recorder\obj\Debug\Slack Recorder.csproj.GenerateResource.cache
